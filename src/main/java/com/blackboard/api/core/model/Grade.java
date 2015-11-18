@@ -7,53 +7,45 @@ package com.blackboard.api.core.model;
  */
 public class Grade
 {
-	private int score;
+    private int score;
 
-	private Submission submission;
-
-
-	/**
-	 * Default constructor for the Grade Model Object.
-	 */
-	public Grade()
-	{
-	}
+    private Submission submission;
 
 
-	/**
-	 * Full constructor for the Grade Model Object.
-	 *
-	 * @param score      The actual numerical value calculated based on the student's performance on the assessment in question
-	 * @param submission The weight of that grade as it pertains to the course as a whole.
-	 */
+    /**
+     * Full constructor for the Grade Model Object.
+     *
+     * @param score      The actual numerical value calculated based on the student's performance on the assessment in question
+     * @param submission The weight of that grade as it pertains to the course as a whole.
+     */
 
-	public Grade(int score, Submission submission)
-	{
-		this.score = score;
-		this.submission = submission;
-	}
-
-
-	public int getScore()
-	{
-		return score;
-	}
+    public Grade(int score, Submission submission)
+    {
+        this.score = score;
+        this.submission = submission;
+    }
 
 
-	public void setScore(int score)
-	{
-		this.score = score;
-	}
+    public int getScore()
+    {
+        return score;
+    }
 
 
-	public Submission getSubmission()
-	{
-		return submission;
-	}
+    public void setScore(int score)
+    {
+        this.score = score;
+    }
 
 
-	public void setSubmission(Submission submission)
-	{
-		this.submission = submission;
-	}
+    public Submission getSubmission()
+    {
+        return submission;
+    }
+
+
+    public void setSubmission(Submission submission)
+    {
+        this.submission = submission;
+    }
 }

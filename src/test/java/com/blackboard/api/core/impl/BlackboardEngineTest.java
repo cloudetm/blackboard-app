@@ -4,7 +4,6 @@ import com.blackboard.api.core.model.Course;
 import com.blackboard.api.core.model.Grade;
 import com.blackboard.api.core.model.Submission;
 import com.blackboard.api.core.model.Transcript;
-
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -14,10 +13,12 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class BlackboardEngineTest {
+public class BlackboardEngineTest
+{
 
     @Test
-    public void testCalculateAverageEmpty() {
+    public void testCalculateAverageEmpty()
+    {
         List<Grade> grades = new ArrayList<>();
         double average;
 
@@ -25,8 +26,10 @@ public class BlackboardEngineTest {
         assertEquals("Average not zero", average, 0d, 0d);
     }
 
+
     @Test
-    public void testCalculateAverage() {
+    public void testCalculateAverage()
+    {
         List<Grade> grades = new ArrayList<>();
         Grade g1 = mock(Grade.class);
         Grade g2 = mock(Grade.class);
@@ -43,8 +46,10 @@ public class BlackboardEngineTest {
         assertEquals("Incorrect average calculated", average, 89.67, 0.01);
     }
 
+
     @Test
-    public void testCalculateWeightedAverageEmpty() {
+    public void testCalculateWeightedAverageEmpty()
+    {
         List<Grade> grades = new ArrayList<>();
         double average;
 
@@ -52,8 +57,10 @@ public class BlackboardEngineTest {
         assertEquals("Average not zero", average, 0d, 0d);
     }
 
+
     @Test
-    public void testCalculateWeightedAverage() {
+    public void testCalculateWeightedAverage()
+    {
         List<Grade> grades = new ArrayList<>();
         Grade g1 = mock(Grade.class);
         Grade g2 = mock(Grade.class);
@@ -79,8 +86,10 @@ public class BlackboardEngineTest {
         assertEquals("Wrong weighted average", average, 90.7, 0.001);
     }
 
+
     @Test
-    public void testCalculateGPAEmpty() {
+    public void testCalculateGPAEmpty()
+    {
         List<Transcript> transcripts = new ArrayList<>();
         double average;
 
@@ -88,8 +97,10 @@ public class BlackboardEngineTest {
         assertEquals("GPA Not 0", average, 0d, 0d);
     }
 
+
     @Test
-    public void testCalculateGPA() {
+    public void testCalculateGPA()
+    {
         List<Transcript> transcripts = new ArrayList<>();
         Transcript t1 = mock(Transcript.class);
         Transcript t2 = mock(Transcript.class);

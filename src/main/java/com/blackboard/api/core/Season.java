@@ -7,5 +7,5 @@ package com.blackboard.api.core;
  */
 public enum Season
 {
-	SPRING, FALL, WINTER, SUMMER
+    SPRING, FALL, WINTER, SUMMER
 }

@@ -7,5 +7,5 @@ package com.blackboard.api.core;
  */
 public enum Subject
 {
-	CSCI, ACCT, ENGL, MATH
+    CSCI, ACCT, ENGL, MATH
 }
