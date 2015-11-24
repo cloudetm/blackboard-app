@@ -14,23 +14,45 @@ public class Student
 
 
     /**
-     * The Full constructor of the Student model Class.
+     * The partial  constructor of the Student model Class.
      *
-     * @param firstName  The students's first name
-     * @param lastName   The students's last name
-     * @param email      The students's email/username
-     * @param password   The students's unencrypted password
-     * @param schoolName The students's home institution
-     * @implNote This constructor sets the isStudent variable to true in its parent class {@link com.blackboard.api.core.model.User}
+     * @param firstName The student's first name
+     * @param lastName  The student's last name
+     * @param email     The student's email/username
+     * @param password  The student's unencrypted password
+     * @param schoolId  The student's home institution
      */
-    public Student(String firstName, String lastName, String email, String password, String schoolName, double gpa)
+    public Student(String firstName, String lastName, String email, String password, int schoolId)
     {
+        super(firstName, lastName, email, password, schoolId);
         this.setFirstName(firstName);
         this.setLastName(lastName);
         this.setEmail(email);
         this.setPassword(password);
-        this.setSchoolName(schoolName);
-        this.gpa = gpa;
+        this.setSchoolId(schoolId);
+    }
+
+
+    /**
+     * The partial  constructor of the Student model Class.
+     *
+     * @param firstName The student's first name
+     * @param lastName  The student's last name
+     * @param email     The student's email/username
+     * @param password  The student's unencrypted password
+     * @param schoolId  The student's home institution
+     * @param gpa       The student's grade point average
+     */
+    public Student(String firstName, String lastName, String email, String password, int schoolId, double gpa)
+    {
+        super(firstName, lastName, email, password, schoolId);
+
+        this.setFirstName(firstName);
+        this.setLastName(lastName);
+        this.setEmail(email);
+        this.setPassword(password);
+        this.setSchoolId(schoolId);
+        this.setGpa(gpa);
     }
 
 
@@ -43,6 +65,14 @@ public class Student
     public void setGpa(double gpa)
     {
         this.gpa = gpa;
+    }
+
+
+    static public Student createStudent(
+            String firstName, String lastName, String email, String pw, int
+            schoolId, double gpa)
+    {
+        return new Student(firstName, lastName, email, encryptPassword(pw), schoolId, gpa);
     }
 
 }

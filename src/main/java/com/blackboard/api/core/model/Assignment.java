@@ -9,6 +9,8 @@ import java.util.Date;
  */
 public class Assignment
 {
+    private int assignmentId;
+
     private Course course;
 
     private String assignmentName;
@@ -35,7 +37,14 @@ public class Assignment
      * @param dateAssigned       Date when the assignment was posted
      * @param dueDate            Expected duedate of the assignment.
      */
-    public Assignment(Course course, String assignmentName, String assignmentFileName, String instructions, int totalPoints, Date dateAssigned, Date dueDate)
+    public Assignment(
+            Course course,
+            String assignmentName,
+            String assignmentFileName,
+            String instructions,
+            int totalPoints,
+            Date dateAssigned,
+            Date dueDate)
     {
         this.course = course;
         this.assignmentName = assignmentName;
@@ -128,5 +137,17 @@ public class Assignment
     public void setCourse(Course course)
     {
         this.course = course;
+    }
+
+
+    public int getAssignmentId()
+    {
+        return assignmentId;
+    }
+
+
+    public void setAssignmentId(int assignmentId)
+    {
+        this.assignmentId = assignmentId;
     }
 }

@@ -7,6 +7,8 @@ package com.blackboard.api.core.model;
  */
 public class Course
 {
+    private String courseId;
+
     private Instructor instructor;
 
     private School school;
@@ -150,5 +152,17 @@ public class Course
     public void setSchool(School school)
     {
         this.school = school;
+    }
+
+
+    public String getCourseId()
+    {
+        return courseId;
+    }
+
+
+    public void setCourseId(String courseId)
+    {
+        this.courseId = courseId;
     }
 }

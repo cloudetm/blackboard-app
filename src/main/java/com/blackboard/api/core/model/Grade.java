@@ -15,7 +15,8 @@ public class Grade
     /**
      * Full constructor for the Grade Model Object.
      *
-     * @param score      The actual numerical value calculated based on the student's performance on the assessment in question
+     * @param score      The actual numerical value calculated based on the student's performance on the
+     *                   assessment in question
      * @param submission The weight of that grade as it pertains to the course as a whole.
      */
 

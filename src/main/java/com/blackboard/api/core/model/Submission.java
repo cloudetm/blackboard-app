@@ -19,8 +19,8 @@ public class Submission
 
 
     /**
-     * The constructor for the Submission Model Object that corresponds with the
-     * situation, during which, a student submits an assignment that has yet to be graded.
+     * The constructor for the Submission Model Object that corresponds with the situation, during which, a
+     * student submits an assignment that has yet to be graded.
      *
      * @param assignment   The assignment to which this submission corresponds.
      * @param weight       The percentage of your overall course grade that is made up by said Submission.

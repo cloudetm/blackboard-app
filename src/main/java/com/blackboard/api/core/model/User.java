@@ -1,5 +1,7 @@
 package com.blackboard.api.core.model;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 /**
  * This is the User Model Class that maps to the users table in the database.
  * <p/>
@@ -15,7 +17,17 @@ public class User
 
     private String password;
 
-    private String schoolName;
+    private int schoolId;
+
+
+    public User(String firstName, String lastName, String email, String password, int schoolId)
+    {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.schoolId = schoolId;
+    }
 
 
     public String getFirstName()
@@ -66,15 +78,46 @@ public class User
     }
 
 
-    public String getSchoolName()
+    public int getSchoolId()
     {
-        return schoolName;
+        return schoolId;
     }
 
 
-    public void setSchoolName(String schoolName)
+    public void setSchoolId(int schoolId)
     {
-        this.schoolName = schoolName;
+        this.schoolId = schoolId;
+    }
+
+
+    /**
+     * If you were to simply encrypt passwords, a breach of security of your application could allow a
+     * malicious user to trivially learn all user passwords. If you hash (or, like I did here, salt and hash)
+     * passwords, the user needs to crack passwords (which is computationally expensive on bcrypt) to gain
+     * that knowledge.
+     *
+     * @param pw The plaintext password to hash and salt
+     *
+     * @return The hashed and salted password
+     */
+    static public String encryptPassword(String pw)
+    {
+        return BCrypt.hashpw(pw, BCrypt.gensalt());
+    }
+
+
+    /**
+     * Check that a plaintext password matches a previously hashed one.  This may be used to validate
+     * passwords if you wanted to reset your password on the client side
+     *
+     * @param plaintext The plaintext password to verify
+     * @param user      The User Object containing the previously-hashed password
+     *
+     * @return True if the passwords match, false otherwise
+     */
+    static public boolean validatePassword(String plaintext, User user)
+    {
+        return BCrypt.checkpw(plaintext, user.getPassword());
     }
 
 }

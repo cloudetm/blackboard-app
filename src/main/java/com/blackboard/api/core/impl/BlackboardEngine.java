@@ -8,8 +8,8 @@ import com.blackboard.api.core.model.Transcript;
 import java.util.List;
 
 /**
- * This utility class implements all of the core logic that will be utilized throughout the application,
- * more specifically, the calculations that will have to be made frequently.
+ * This utility class implements all of the core logic that will be utilized throughout the application, more
+ * specifically, the calculations that will have to be made frequently.
  * <p/>
  * Created by ChristopherLicata on 11/14/15.
  *
@@ -22,6 +22,7 @@ public class BlackboardEngine
      * Calculate the averages of a list of {@link Grade} objects
      *
      * @param gradeList Grades to average
+     *
      * @return Resulting average
      */
     public static double calculateAverage(List<Grade> gradeList)
@@ -34,10 +35,11 @@ public class BlackboardEngine
 
 
     /**
-     * Compute a weighted average of {@link Grade} objects by the weight of their
-     * associated {@link Submission}
+     * Compute a weighted average of {@link Grade} objects by the weight of their associated {@link
+     * Submission}
      *
      * @param gradeList Grades to average
+     *
      * @return Resulting weighted average
      */
     public static double calculateWeightedAverage(List<Grade> gradeList)
@@ -49,12 +51,13 @@ public class BlackboardEngine
 
 
     /**
-     * Compute a student's GPA from a list of their completed courses
-     * Uses the transcript's associated {@link Course} and {@link Grade} for credit weight / result
+     * Compute a student's GPA from a list of their completed courses Uses the transcript's associated {@link
+     * Course} and {@link Grade} for credit weight / result
      * <p/>
      * Returns a percent of total points earned (100 * number of credits per course)
      *
      * @param transcripts Transcripts to average
+     *
      * @return Resulting weighted average
      */
     public static double calculateGPA(List<Transcript> transcripts)

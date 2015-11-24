@@ -9,6 +9,8 @@ public class School
 {
     private String name;
 
+    private int schoolId;
+
 
     public School(String name)
     {
@@ -26,4 +28,17 @@ public class School
     {
         this.name = name;
     }
+
+
+    public int getSchoolId()
+    {
+        return schoolId;
+    }
+
+
+    public void setSchoolId(int schoolId)
+    {
+        this.schoolId = schoolId;
+    }
+
 }

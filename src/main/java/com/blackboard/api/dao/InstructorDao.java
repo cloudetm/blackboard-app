@@ -6,9 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * The internal API for the persistence layer operations.
- * These operations listed only pertain to the Creation,
- * Retrieval, Updating, and Deletion of Instructor objects.
+ * The internal API for the persistence layer operations. These operations listed only pertain to the
+ * Creation, Retrieval, Updating, and Deletion of Instructor objects.
  * <p/>
  *
  * @author ChristopherLicata <Chris@bizmerlin.com>
