@@ -42,6 +42,12 @@
             <version>4.12</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.codacy</groupId>
+            <artifactId>codacy-coverage-reporter</artifactId>
+            <version>1.0.4</version>
+        </dependency>
+
     </dependencies>
 
 
