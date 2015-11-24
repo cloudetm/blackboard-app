@@ -1,5 +1,7 @@
 package com.blackboard.api.dao.util;
 
+import com.sun.media.jfxmedia.logging.Logger;
+
 import java.sql.*;
 import java.util.Optional;
 
@@ -148,28 +150,23 @@ public class MySQLDao
 
         for (Throwable e : ex)
         {
-            if (e instanceof SQLException)
+            if (e instanceof SQLException && !ignoreSQLException(((SQLException) e).getSQLState()))
             {
-                if (!ignoreSQLException(
-                        ((SQLException) e).
-                                getSQLState()))
+
+                e.printStackTrace(System.err);
+                Logger.logMsg(1, "SQLState: " +
+                        ((SQLException) e).getSQLState());
+
+                Logger.logMsg(1, "Error Code: " +
+                        ((SQLException) e).getErrorCode());
+
+                Logger.logMsg(1, "Message: " + e.getMessage());
+
+                Throwable t = ex.getCause();
+                while (t != null)
                 {
-
-                    e.printStackTrace(System.err);
-                    System.err.println("SQLState: " +
-                                               ((SQLException) e).getSQLState());
-
-                    System.err.println("Error Code: " +
-                                               ((SQLException) e).getErrorCode());
-
-                    System.err.println("Message: " + e.getMessage());
-
-                    Throwable t = ex.getCause();
-                    while (t != null)
-                    {
-                        System.out.println("Cause: " + t);
-                        t = t.getCause();
-                    }
+                    Logger.logMsg(1, "Cause: " + t);
+                    t = t.getCause();
                 }
             }
         }
@@ -227,8 +224,13 @@ public class MySQLDao
         catch (SQLException e)
         {
             printSQLException(e);
-            System.exit(-1);
+            exitApplication();
         }
     }
 
+
+    private static void exitApplication()
+    {
+        Runtime.getRuntime().exit(0);
+    }
 }

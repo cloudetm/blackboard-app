@@ -33,6 +33,22 @@ public class ResultSetMocker
     }
 
 
+    public Optional<ResultSet> mockStudentMultiRowResultSet()
+            throws
+            SQLException
+    {
+        ResultSet resultSetMock = mock(ResultSet.class);
+        when(resultSetMock.next()).thenReturn(true).thenReturn(true).thenReturn(false);
+        when(resultSetMock.getString("fname")).thenReturn("Monica", "Ross");
+        when(resultSetMock.getString("lname")).thenReturn("Geller", "Geller");
+        when(resultSetMock.getString("email")).thenReturn("chefmonica@gmail.com", "dinosaurman93@yahoo.com");
+        when(resultSetMock.getString("password")).thenReturn("9382hcioh8", "f8j342nfb");
+        when(resultSetMock.getInt("school_id")).thenReturn(78, 7);
+        when(resultSetMock.getDouble("gpa")).thenReturn(3.1, 4.3);
+        return Optional.of(resultSetMock);
+    }
+
+
     public Optional<ResultSet> mockInstructorResultSet(
             String firstName, String lastName, String email, String
             password, int schoolId)
@@ -64,18 +80,28 @@ public class ResultSetMocker
     }
 
 
-    public Optional<ResultSet> mockStudentMultiRowResultSet()
+    public Optional<ResultSet> mockSchoolResultSet(int schoolId, String schoolName)
+            throws SQLException
+    {
+        ResultSet resultSetMock = mock(ResultSet.class);
+        when(resultSetMock.next()).thenReturn(true).thenReturn(false);
+        when(resultSetMock.getInt("school_id")).thenReturn(schoolId);
+        when(resultSetMock.getString("name")).thenReturn(schoolName);
+        return Optional.of(resultSetMock);
+    }
+
+
+    public Optional<ResultSet> mockSchoolMultiRowResultSet()
             throws
             SQLException
     {
         ResultSet resultSetMock = mock(ResultSet.class);
         when(resultSetMock.next()).thenReturn(true).thenReturn(true).thenReturn(false);
-        when(resultSetMock.getString("fname")).thenReturn("Monica", "Ross");
-        when(resultSetMock.getString("lname")).thenReturn("Geller", "Geller");
-        when(resultSetMock.getString("email")).thenReturn("chefmonica@gmail.com", "dinosaurman93@yahoo.com");
-        when(resultSetMock.getString("password")).thenReturn("9382hcioh8", "f8j342nfb");
-        when(resultSetMock.getInt("school_id")).thenReturn(78, 7);
-        when(resultSetMock.getDouble("gpa")).thenReturn(3.1, 4.3);
+        when(resultSetMock.getInt("school_id")).thenReturn(15, 14);
+        when(resultSetMock.getString("name")).thenReturn(
+                "The George Washington University",
+                "University of Maryland");
         return Optional.of(resultSetMock);
     }
+
 }

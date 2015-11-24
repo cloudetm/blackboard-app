@@ -23,7 +23,7 @@ public class InstructorMySQLDaoTest
 
     private InstructorMySQLDao instructorDao;
 
-    ResultSetMocker resultSet;
+    private ResultSetMocker resultSet;
 
 
     @Before

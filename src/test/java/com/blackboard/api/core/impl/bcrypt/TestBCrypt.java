@@ -28,7 +28,7 @@ import java.util.Objects;
 public class TestBCrypt
         extends TestCase
 {
-    String test_vectors[][] = {
+    private String test_vectors[][] = {
             { "",
                     "$2a$06$DCq7YPn5Rq63x1Lad4cll.",
                     "$2a$06$DCq7YPn5Rq63x1Lad4cll.TV4S6ytwfsfvkgY8jIucDrjc8deX1s." },
@@ -144,7 +144,7 @@ public class TestBCrypt
     /**
      * Test method for 'BCrypt.checkpw(String, String)' expecting success
      */
-    public void testCheckpw_success()
+    public void testCheckpwSuccess()
     {
         System.out.print("BCrypt.checkpw w/ good passwords: ");
         for (String[] test_vector : test_vectors)
@@ -161,7 +161,7 @@ public class TestBCrypt
     /**
      * Test method for 'BCrypt.checkpw(String, String)' expecting failure
      */
-    public void testCheckpw_failure()
+    public void testCheckpwFailure()
     {
         System.out.print("BCrypt.checkpw w/ bad passwords: ");
         for (int i = 0; i < test_vectors.length; i++)

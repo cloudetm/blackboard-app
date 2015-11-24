@@ -14,16 +14,13 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
-/**
- * Created by ChristopherLicata on 11/19/15.
- */
 public class StudentMySQLDaoTest
 {
-    StudentMySQLDao studentDao;
+    private StudentMySQLDao studentDao;
 
-    MySQLDao dao;
+    private MySQLDao dao;
 
-    ResultSetMocker resultSet;
+    private ResultSetMocker resultSet;
 
 
     @Before

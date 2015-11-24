@@ -12,6 +12,13 @@ public class School
     private int schoolId;
 
 
+    public School(int schoolId, String name)
+    {
+        this.schoolId = schoolId;
+        this.name = name;
+    }
+
+
     public School(String name)
     {
         this.name = name;
