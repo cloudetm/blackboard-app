@@ -15,6 +15,8 @@ import java.util.Optional;
 import static org.mockito.Mockito.*;
 
 /**
+ * * Test class for the MySQL-based {@link InstructorMySQLDao} Operations
+ *
  * Created by ChristopherLicata on 11/22/15.
  */
 public class InstructorMySQLDaoTest
@@ -58,7 +60,7 @@ public class InstructorMySQLDaoTest
 
 
     /**
-     * Testing for correct parameters in call to InstructorMySQLDao -- expecting Success.
+     * Testing for correct parameters in call to {@link InstructorMySQLDao} -- expecting Success.
      *
      * @throws SQLException
      */
@@ -153,7 +155,7 @@ public class InstructorMySQLDaoTest
     {
         String q = new StringBuilder()
                 .append("SELECT fname, lname, email, password, school_id FROM users ")
-                .append("WHERE email = ? AND is_student = ?")
+                .append("WHERE is_student = ?")
                 .toString();
 
         Optional<ResultSet> result = resultSet.mockInstructorMultiRowResultSet();
@@ -174,7 +176,7 @@ public class InstructorMySQLDaoTest
         Assert.that(instructors.get(0).getPassword()
                             .equals("rdtcut27"), "Instructor password did not match expected value");
         Assert.that(
-                instructors.get(0).getSchoolId() == 12, "Instructor schoolId did not match expected value");
+                instructors.get(0).getSchoolId() == 14, "Instructor schoolId did not match expected value");
 
         // Second Row of Result Set
         Assert.that(instructors.get(1).getFirstName()
@@ -182,12 +184,11 @@ public class InstructorMySQLDaoTest
         Assert.that(instructors.get(1).getLastName()
                             .equals("Hayes"), "Instructor last name did not match expected value");
         Assert.that(instructors.get(1).getEmail()
-                            .equals("heffer@yahoo.com"), "Instructor email name did not match expected " +
-                            "value");
+                            .equals("heffer@yahoo.com"), "Instructor email name did not match expected value");
         Assert.that(instructors.get(1).getPassword()
                             .equals("gdby7c8e2"), "Instructor password did not match expected value");
         Assert.that(
-                instructors.get(1).getSchoolId() == 2, "Instructor schoolId did not match expected value");
+                instructors.get(1).getSchoolId() == 12, "Instructor schoolId did not match expected value");
 
     }
 }

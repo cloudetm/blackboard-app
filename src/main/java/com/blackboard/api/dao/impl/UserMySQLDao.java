@@ -97,6 +97,7 @@ public class UserMySQLDao
      * Delete a user from the database, using the user's email to uniquely identify him or her
      *
      * @param email The email of the user that we are trying to delete from the database.
+     * @return user The user that was just deleted from the database
      */
 
     @Override

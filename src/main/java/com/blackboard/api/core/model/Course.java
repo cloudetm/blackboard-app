@@ -7,7 +7,7 @@ package com.blackboard.api.core.model;
  */
 public class Course
 {
-    private String courseId;
+    private int courseId;
 
     private Instructor instructor;
 
@@ -15,7 +15,7 @@ public class Course
 
     private String courseName;
 
-    private String subject;
+    private Enum subject;
 
     private int courseNumber;
 
@@ -27,7 +27,7 @@ public class Course
 
 
     /**
-     * The full constructor for the Course model object.
+     * The semi-full constructor for the Course model object.
      *
      * @param school           The instution that offers the course
      * @param instructor       The instructor of the course.
@@ -42,12 +42,48 @@ public class Course
             School school,
             Instructor instructor,
             String courseName,
-            String subject,
+            Enum subject,
             int courseNumber,
             int credits,
             String syllabusFileName,
             int maxCapacity)
     {
+        this.school = school;
+        this.instructor = instructor;
+        this.courseName = courseName;
+        this.subject = subject;
+        this.courseNumber = courseNumber;
+        this.credits = credits;
+        this.syllabusFileName = syllabusFileName;
+        this.maxCapacity = maxCapacity;
+    }
+
+
+    /**
+     * The full constructor for the Course model object.
+     *
+     * @param courseId
+     * @param school           The instution that offers the course
+     * @param instructor       The instructor of the course.
+     * @param courseName       The name of the course.
+     * @param subject          The subject of the course.
+     * @param courseNumber     The course number.
+     * @param credits          The number of credits assigned to the course.
+     * @param syllabusFileName The filename of the syllabus.
+     * @param maxCapacity      The maximum number of students allowed to enroll in the course.
+     */
+    public Course(
+            int courseId,
+            School school,
+            Instructor instructor,
+            String courseName,
+            Enum subject,
+            int courseNumber,
+            int credits,
+            String syllabusFileName,
+            int maxCapacity)
+    {
+        this.courseId = courseId;
         this.school = school;
         this.instructor = instructor;
         this.courseName = courseName;
@@ -65,7 +101,7 @@ public class Course
     }
 
 
-    public void setInstructor(Instructor instructor)
+    public void setInstructor(Instructor mockInstructor)
     {
         this.instructor = instructor;
     }
@@ -107,13 +143,19 @@ public class Course
     }
 
 
-    public String getSubject()
+    public String getSubjectAsString()
+    {
+        return subject.toString();
+    }
+
+
+    public Enum getSubject()
     {
         return subject;
     }
 
 
-    public void setSubject(String subject)
+    public void setSubject(Enum subject)
     {
         this.subject = subject;
     }
@@ -155,13 +197,13 @@ public class Course
     }
 
 
-    public String getCourseId()
+    public int getCourseId()
     {
         return courseId;
     }
 
 
-    public void setCourseId(String courseId)
+    public void setCourseId(int courseId)
     {
         this.courseId = courseId;
     }

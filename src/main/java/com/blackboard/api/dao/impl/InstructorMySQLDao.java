@@ -92,7 +92,7 @@ public class InstructorMySQLDao
 
 
     /**
-     * Find all Instructors in database.
+     * Find all Instructors for a particular school in the database.
      *
      * @return instructors  List of instructors that are present in the users table of the database.
      */
@@ -101,7 +101,7 @@ public class InstructorMySQLDao
     {
         String q = new StringBuilder()
                 .append("SELECT fname, lname, email, password, school_id FROM users ")
-                .append("WHERE email = ? AND is_student = ?")
+                .append("WHERE is_student = ?")
                 .toString();
         try
         {

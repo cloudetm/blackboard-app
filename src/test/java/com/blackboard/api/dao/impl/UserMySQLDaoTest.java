@@ -16,7 +16,7 @@ import java.util.Optional;
 import static org.mockito.Mockito.*;
 
 /**
- * Test class for the MySQL-based UserDao Operations
+ * Test class for the MySQL-based {@link UserMySQLDao} Operations
  * <p/>
  * Created by ChristopherLicata on 11/22/15.
  */
