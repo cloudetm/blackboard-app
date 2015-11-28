@@ -14,6 +14,8 @@ import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -61,8 +63,8 @@ public class SubmissionMySQLDaoTest {
 
     @After
     public void tearDown() throws Exception {
-        System.setOut(null);
-        System.setErr(null);
+        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+        System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
     }
 
 
