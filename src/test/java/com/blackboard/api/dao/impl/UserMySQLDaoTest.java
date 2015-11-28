@@ -55,7 +55,7 @@ public class UserMySQLDaoTest
         String email = "fooman@bar.com";
         int isStudent = 0;
 
-        Optional<ResultSet> result = resultSet.mockInstructorResultSet("Gregory", "Manchester",
+        Optional<ResultSet> result = resultSet.mockInstructorResultSet(1, "Gregory", "Manchester",
                                                                        "fooman@bar.com",
                                                                        "234567jfe", 12);
 
@@ -64,6 +64,8 @@ public class UserMySQLDaoTest
         Optional<User> instructor = userDao.findUserByEmail("fooman@bar.com");
 
         Assert.that(instructor.isPresent(), "Instructor is not being returned as a result of the DB query");
+
+        Assert.that(instructor.get().getUserId() == 1, "Instructor userID did not match expected value");
         Assert.that(instructor.get().getFirstName()
                             .equals("Gregory"), "Instructor first name did not match expected value");
         Assert.that(instructor.get().getLastName()
@@ -90,12 +92,13 @@ public class UserMySQLDaoTest
 
         String q = "SELECT * FROM users WHERE email = ? LIMIT 1";
 
-        Optional<ResultSet> result = resultSet.mockStudentResultSet("Chris", "Licata", "foo@bar.com",
+        Optional<ResultSet> result = resultSet.mockStudentResultSet(1, "Chris", "Licata", "foo@bar.com",
                                                                     "fyghvbjknlm", 1, 4.0);
         when(dao.query(q, "foo@bar.com")).thenReturn(result);
 
         Optional<User> student = userDao.findUserByEmail("foo@bar.com");
 
+        Assert.that(student.get().getUserId() == 1, "Student userID did not match expected value");
         Assert.that(student.isPresent(), "Student is not being returned as a result of the DB query");
         Assert.that(student.get().getFirstName()
                             .equals("Chris"), "Student first name did not match expected value");
@@ -161,7 +164,7 @@ public class UserMySQLDaoTest
 
         String email = "bobbylight@gmail.com";
         Optional<ResultSet> result = resultSet
-                .mockStudentResultSet("Robbie", "Thomson", "bobbylight@gmail.com",
+                .mockStudentResultSet(1, "Robbie", "Thomson", "bobbylight@gmail.com",
                                       "fyghvbjknlm", 1, 4.0);
         when(dao.query(selectQ, email)).thenReturn(
                 (result));
@@ -182,7 +185,7 @@ public class UserMySQLDaoTest
         String selectQ = "SELECT * FROM users WHERE email = ? LIMIT 1";
         String deleteQ = "DELETE FROM users WHERE email=?";
         String email = "boobookitty@gmail.com";
-        Optional<ResultSet> result = resultSet.mockInstructorResultSet("Richard", "McCarther",
+        Optional<ResultSet> result = resultSet.mockInstructorResultSet(1, "Richard", "McCarther",
                                                                        "boobookitty@gmail.com",
                                                                        "bc85bpqa23v", 1);
         when(dao.query(selectQ, email)).thenReturn(

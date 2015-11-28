@@ -21,12 +21,14 @@ public class ResultSetMocker
 {
 
     public Optional<ResultSet> mockStudentResultSet(
+            int userId,
             String firstName, String lastName, String email, String
             password, int schoolId, double gpa)
             throws SQLException
     {
         ResultSet resultSetMock = mock(ResultSet.class);
         when(resultSetMock.next()).thenReturn(true).thenReturn(false);
+        when(resultSetMock.getInt("userID")).thenReturn(userId);
         when(resultSetMock.getString("fname")).thenReturn(firstName);
         when(resultSetMock.getString("lname")).thenReturn(lastName);
         when(resultSetMock.getString("email")).thenReturn(email);
@@ -44,6 +46,7 @@ public class ResultSetMocker
     {
         ResultSet resultSetMock = mock(ResultSet.class);
         when(resultSetMock.next()).thenReturn(true).thenReturn(true).thenReturn(false);
+        when(resultSetMock.getInt("userID")).thenReturn(1, 2);
         when(resultSetMock.getString("fname")).thenReturn("Monica", "Ross");
         when(resultSetMock.getString("lname")).thenReturn("Geller", "Geller");
         when(resultSetMock.getString("email")).thenReturn("chefmonica@gmail.com", "dinosaurman93@yahoo.com");
@@ -55,12 +58,14 @@ public class ResultSetMocker
 
 
     public Optional<ResultSet> mockInstructorResultSet(
+            int userId,
             String firstName, String lastName, String email, String
             password, int schoolId)
             throws SQLException
     {
         ResultSet resultSetMock = mock(ResultSet.class);
         when(resultSetMock.next()).thenReturn(true).thenReturn(false);
+        when(resultSetMock.getInt("userID")).thenReturn(userId);
         when(resultSetMock.getString("fname")).thenReturn(firstName);
         when(resultSetMock.getString("lname")).thenReturn(lastName);
         when(resultSetMock.getString("email")).thenReturn(email);
@@ -76,6 +81,7 @@ public class ResultSetMocker
     {
         ResultSet resultSetMock = mock(ResultSet.class);
         when(resultSetMock.next()).thenReturn(true).thenReturn(true).thenReturn(false);
+        when(resultSetMock.getInt("userID")).thenReturn(1, 2);
         when(resultSetMock.getString("fname")).thenReturn("Phil", "Bobby");
         when(resultSetMock.getString("lname")).thenReturn("Loopy", "Hayes");
         when(resultSetMock.getString("email")).thenReturn("loopy@gmail.com", "heffer@yahoo.com");

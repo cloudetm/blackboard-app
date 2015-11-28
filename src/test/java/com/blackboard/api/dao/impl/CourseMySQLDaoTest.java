@@ -67,15 +67,15 @@ public class CourseMySQLDaoTest
 
         //Instructor Mock DB Call Handling
         String instructorQuery = new StringBuilder()
-                .append("SELECT fname, lname, email, password, school_id FROM users ")
+                .append("SELECT userID, fname, lname, email, password, school_id FROM users ")
                 .append("WHERE email = ? AND is_student = ? LIMIT 1")
                 .toString();
 
-        Optional<ResultSet> instructorOneResult = resultSet.mockInstructorResultSet("Jim", "Bean",
+        Optional<ResultSet> instructorOneResult = resultSet.mockInstructorResultSet(1, "Jim", "Bean",
                                                                                     "jsuarez@gwu.edu",
                                                                                     "iond3t83h", 14);
 
-        Optional<ResultSet> instructorTwoResult = resultSet.mockInstructorResultSet("Jake", "Oberman",
+        Optional<ResultSet> instructorTwoResult = resultSet.mockInstructorResultSet(2, "Jake", "Oberman",
                                                                                     "sudoman@caltech.edu",
                                                                                     "vb2389bv", 14);
 
@@ -179,11 +179,11 @@ public class CourseMySQLDaoTest
 
         //Instructor Mock DB Call Handling
         String instructorQuery = new StringBuilder()
-                .append("SELECT fname, lname, email, password, school_id FROM users ")
+                .append("SELECT userID, fname, lname, email, password, school_id FROM users ")
                 .append("WHERE email = ? AND is_student = ? LIMIT 1")
                 .toString();
 
-        Optional<ResultSet> instructorOneResult = resultSet.mockInstructorResultSet("Jim", "Bean",
+        Optional<ResultSet> instructorOneResult = resultSet.mockInstructorResultSet(1, "Jim", "Bean",
                                                                                     "jsuarez@gwu.edu",
                                                                                     "iond3t83h", 14);
         when(dao.query(instructorQuery, "jsuarez@gwu.edu", 0)).thenReturn(instructorOneResult);
@@ -224,11 +224,11 @@ public class CourseMySQLDaoTest
 
         //Instructor Mock DB Call Handling
         String instructorQuery = new StringBuilder()
-                .append("SELECT fname, lname, email, password, school_id FROM users ")
+                .append("SELECT userID, fname, lname, email, password, school_id FROM users ")
                 .append("WHERE email = ? AND is_student = ? LIMIT 1")
                 .toString();
 
-        Optional<ResultSet> instructorOneResult = resultSet.mockInstructorResultSet("Jim", "Bean",
+        Optional<ResultSet> instructorOneResult = resultSet.mockInstructorResultSet(1, "Jim", "Bean",
                                                                                     "jsuarez@gwu.edu",
                                                                                     "iond3t83h", 14);
         when(dao.query(instructorQuery, "jsuarez@gwu.edu", 0)).thenReturn(instructorOneResult);
@@ -341,11 +341,10 @@ public class CourseMySQLDaoTest
 
         //Instructor Mock DB Call Handling
         String instructorQuery = new StringBuilder()
-                .append("SELECT fname, lname, email, password, school_id FROM users ")
+                .append("SELECT userID, fname, lname, email, password, school_id FROM users ")
                 .append("WHERE email = ? AND is_student = ? LIMIT 1")
                 .toString();
-
-        Optional<ResultSet> instructorOneResult = resultSet.mockInstructorResultSet("Jim", "Bean",
+        Optional<ResultSet> instructorOneResult = resultSet.mockInstructorResultSet(1, "Jim", "Bean",
                                                                                     "bobbylight@gmail.com",
                                                                                     "iond3t83h", 14);
 

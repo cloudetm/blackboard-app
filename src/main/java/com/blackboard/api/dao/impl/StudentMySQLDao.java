@@ -47,7 +47,20 @@ public class StudentMySQLDao
         String email = student.getEmail();
         String pw = student.getPassword();
         int school_id = student.getSchoolId();
-        dao.update(query, fname, lname, email, pw, school_id, 1);
+        Optional<ResultSet> studentId = dao.update(query, fname, lname, email, pw, school_id, 1);
+        try
+        {
+            // Assign the row id to the assignmentId for easy access
+            student.setUserId(studentId.get().getInt(1));
+            // Closing result set for good form.
+            studentId.get().close();
+
+        }
+        catch (SQLException e)
+        {
+            printSQLException(e);
+
+        }
         return student;
     }
 
@@ -64,7 +77,7 @@ public class StudentMySQLDao
     public Optional<Student> findStudentByEmail(String studentEmail)
     {
         String q = new StringBuilder()
-                .append("SELECT fname, lname, email, password, school_id, gpa FROM users ")
+                .append("SELECT userID, fname, lname, email, password, school_id, gpa FROM users ")
                 .append("WHERE email = ? AND is_student = ? LIMIT 1")
                 .toString();
         return dao.query(q, studentEmail, 1).flatMap(result -> {
@@ -72,13 +85,14 @@ public class StudentMySQLDao
             {
                 if (result.next())
                 {
+                    int userId = result.getInt("userID");
                     String fname = result.getString("fname");
                     String lname = result.getString("lname");
                     String email = result.getString("email");
                     String pw = result.getString("password");
                     int schoolId = result.getInt("school_id");
                     double gpa = result.getDouble("gpa");
-                    return Optional.of(new Student(fname, lname, email, pw, schoolId, gpa));
+                    return Optional.of(new Student(userId, fname, lname, email, pw, schoolId, gpa));
                 }
                 else
                     return Optional.empty();
@@ -101,8 +115,8 @@ public class StudentMySQLDao
     public List<Student> findAllStudents()
     {
         String q = new StringBuilder()
-                .append("SELECT fname, lname, email, password, school_id, gpa FROM users ")
-                .append("WHERE email = ? AND is_student = ?")
+                .append("SELECT userID, fname, lname, email, password, school_id, gpa FROM users ")
+                .append("WHERE is_student = ?")
                 .toString();
         try
         {
@@ -111,13 +125,14 @@ public class StudentMySQLDao
             ArrayList<Student> students = new ArrayList<>();
             while (result.next())
             {
+                int userId = result.getInt("userID");
                 String fname = result.getString("fname");
                 String lname = result.getString("lname");
                 String email = result.getString("email");
                 String pw = result.getString("password");
                 int schoolId = result.getInt("school_id");
                 double gpa = result.getDouble("gpa");
-                students.add(new Student(fname, lname, email, pw, schoolId, gpa));
+                students.add(new Student(userId, fname, lname, email, pw, schoolId, gpa));
             }
             return students;
         }

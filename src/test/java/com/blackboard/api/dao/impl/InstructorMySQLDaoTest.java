@@ -42,6 +42,7 @@ public class InstructorMySQLDaoTest
      */
     @Test
     public void testCreateInstructor()
+            throws SQLException
     {
         String query = new StringBuilder()
                 .append("INSERT INTO users(fname, lname, email, password, school_id, is_student) VALUES")
@@ -53,7 +54,8 @@ public class InstructorMySQLDaoTest
         when(instructor.getEmail()).thenReturn("foo@bar.com");
         when(instructor.getPassword()).thenReturn("hykhkbgku");
         when(instructor.getSchoolId()).thenReturn(3);
-
+        Optional<ResultSet> userID = resultSet.mockAutoGenerateKeyResultSet(1);
+        when(dao.update(query, "Greg", "House", "foo@bar.com", "hykhkbgku", 3, 0)).thenReturn(userID);
         instructorDao.createInstructor(instructor);
         verify(dao).update(query, "Greg", "House", "foo@bar.com", "hykhkbgku", 3, 0);
     }
@@ -69,13 +71,14 @@ public class InstructorMySQLDaoTest
             throws SQLException
     {
         String q = new StringBuilder()
-                .append("SELECT fname, lname, email, password, school_id FROM users ")
+                .append("SELECT userID, fname, lname, email, password, school_id FROM users ")
                 .append("WHERE email = ? AND is_student = ? LIMIT 1")
                 .toString();
 
         String email = "c2o151@yahoo.com";
 
-        Optional<ResultSet> result = resultSet.mockStudentResultSet("Radcliff", "Garret", "c2o151@yahoo.com",
+        Optional<ResultSet> result = resultSet.mockStudentResultSet(1, "Radcliff", "Garret", "c2o151@yahoo" +
+                                                                            ".com",
                                                                     "ytr83942ct3", 89, 2.1);
         when(dao.query(q, email, 0)).thenReturn(result);
         instructorDao.findInstructorByEmail(email);
@@ -95,13 +98,13 @@ public class InstructorMySQLDaoTest
             throws SQLException
     {
         String q = new StringBuilder()
-                .append("SELECT fname, lname, email, password, school_id FROM users ")
+                .append("SELECT userID, fname, lname, email, password, school_id FROM users ")
                 .append("WHERE email = ? AND is_student = ? LIMIT 1")
                 .toString();
         String email = "fooman@bar.com";
         int isStudent = 0;
 
-        Optional<ResultSet> result = resultSet.mockInstructorResultSet("Gregory", "Manchester",
+        Optional<ResultSet> result = resultSet.mockInstructorResultSet(1, "Gregory", "Manchester",
                                                                        "fooman@bar.com",
                                                                        "234567jfe", 12);
         when(dao.query(q, email, isStudent)).thenReturn(result);
@@ -109,6 +112,7 @@ public class InstructorMySQLDaoTest
         Optional<Instructor> instructor = instructorDao.findInstructorByEmail("fooman@bar.com");
 
         Assert.that(instructor.isPresent(), "Instructor is not being returned as a result of the DB query");
+        Assert.that(instructor.get().getUserId() == 1, "Instructor userID did not match expected value");
         Assert.that(instructor.get().getFirstName()
                             .equals("Gregory"), "Instructor first name did not match expected value");
         Assert.that(instructor.get().getLastName()
@@ -154,7 +158,7 @@ public class InstructorMySQLDaoTest
             throws Exception
     {
         String q = new StringBuilder()
-                .append("SELECT fname, lname, email, password, school_id FROM users ")
+                .append("SELECT userID, fname, lname, email, password, school_id FROM users ")
                 .append("WHERE is_student = ?")
                 .toString();
 
@@ -167,6 +171,7 @@ public class InstructorMySQLDaoTest
         Assert.that(
                 instructors.size() == 2, "Instructors are not being returned as a result of the DB query");
 
+        Assert.that(instructors.get(0).getUserId() == 1, "Instructor userID did not match expected value");
         Assert.that(instructors.get(0).getFirstName()
                             .equals("Phil"), "Instructor first name did not match expected value");
         Assert.that(instructors.get(0).getLastName()
@@ -179,6 +184,8 @@ public class InstructorMySQLDaoTest
                 instructors.get(0).getSchoolId() == 14, "Instructor schoolId did not match expected value");
 
         // Second Row of Result Set
+
+        Assert.that(instructors.get(1).getUserId() == 2, "Instructor userID did not match expected value");
         Assert.that(instructors.get(1).getFirstName()
                             .equals("Bobby"), "Instructor first name did not match expected value");
         Assert.that(instructors.get(1).getLastName()
