@@ -1,10 +1,13 @@
 package com.blackboard.api.dao.impl.util;
 
 import com.blackboard.api.core.Subject;
+import com.blackboard.api.core.model.Grade;
 
+import java.security.cert.PKIXRevocationChecker;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Optional;
@@ -208,6 +211,33 @@ public class ResultSetMocker
                 "test2.docx");
         when(resultSetMock.getString("instructions")).thenReturn("Take it", "Take it Now");
         return Optional.of(resultSetMock);
+    }
+
+    public Optional<ResultSet> mockSubmissionResultSet(
+            int assignmentId, String studentEmail,
+            Timestamp currentTimeStamp, String submissionFileName
+    ) throws SQLException {
+        ResultSet resultSetMock = mock(ResultSet.class);
+        when(resultSetMock.next()).thenReturn(true).thenReturn(true).thenReturn(false);
+        when(resultSetMock.getTimestamp("date_time_submitted")).thenReturn(currentTimeStamp);
+        when(resultSetMock.getString("submission_file_name")).thenReturn(submissionFileName);
+        when(resultSetMock.getInt("assignment_id")).thenReturn(assignmentId);
+        when(resultSetMock.getString("student_email")).thenReturn(studentEmail);
+        return Optional.of(resultSetMock);
+    }
+
+
+
+    public Optional<ResultSet> mockSubmissionResultSet(
+            int assignmentId, String studentEmail,
+            Timestamp currentTimeStamp, String submissionFileName,
+            int submissionId, Grade grade
+    ) throws SQLException {
+        Optional<ResultSet> resultSetMock = mockSubmissionResultSet(assignmentId, studentEmail, currentTimeStamp, submissionFileName);
+        when(resultSetMock.get().getInt(1)).thenReturn(submissionId);
+        when(resultSetMock.get().getInt("submission_id")).thenReturn(submissionId);
+        when(resultSetMock.get().getInt("grade_id")).thenReturn(grade.getGradeId());
+        return resultSetMock;
     }
 
 
