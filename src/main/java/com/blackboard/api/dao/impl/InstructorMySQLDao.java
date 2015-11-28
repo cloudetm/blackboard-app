@@ -47,7 +47,20 @@ public class InstructorMySQLDao
         String email = instructor.getEmail();
         String pw = instructor.getPassword();
         int school_id = instructor.getSchoolId();
-        dao.update(query, fname, lname, email, pw, school_id, 0);
+        Optional<ResultSet> instructorId = dao.update(query, fname, lname, email, pw, school_id, 0);
+        try
+        {
+            // Assign the row id to the assignmentId for easy access
+            instructor.setUserId(instructorId.get().getInt(1));
+            // Closing result set for good form.
+            instructorId.get().close();
+
+        }
+        catch (SQLException e)
+        {
+            printSQLException(e);
+        }
+
         return instructor;
     }
 
@@ -64,7 +77,7 @@ public class InstructorMySQLDao
     public Optional<Instructor> findInstructorByEmail(String instructorEmail)
     {
         String q = new StringBuilder()
-                .append("SELECT fname, lname, email, password, school_id FROM users ")
+                .append("SELECT userID, fname, lname, email, password, school_id FROM users ")
                 .append("WHERE email = ? AND is_student = ? LIMIT 1")
                 .toString();
         return dao.query(q, instructorEmail, 0).flatMap(result -> {
@@ -72,12 +85,13 @@ public class InstructorMySQLDao
             {
                 if (result.next())
                 {
+                    int userId = result.getInt("userID");
                     String fname = result.getString("fname");
                     String lname = result.getString("lname");
                     String email = result.getString("email");
                     String pw = result.getString("password");
                     int schoolId = result.getInt("school_id");
-                    return Optional.of(new Instructor(fname, lname, email, pw, schoolId));
+                    return Optional.of(new Instructor(userId, fname, lname, email, pw, schoolId));
                 }
                 else
                     return Optional.empty();
@@ -100,7 +114,7 @@ public class InstructorMySQLDao
     public List<Instructor> findAllInstructors()
     {
         String q = new StringBuilder()
-                .append("SELECT fname, lname, email, password, school_id FROM users ")
+                .append("SELECT userID, fname, lname, email, password, school_id FROM users ")
                 .append("WHERE is_student = ?")
                 .toString();
         try
@@ -110,12 +124,13 @@ public class InstructorMySQLDao
             ArrayList<Instructor> instructors = new ArrayList<>();
             while (result.next())
             {
+                int userId = result.getInt("userID");
                 String fname = result.getString("fname");
                 String lname = result.getString("lname");
                 String email = result.getString("email");
                 String pw = result.getString("password");
                 int schoolId = result.getInt("school_id");
-                instructors.add(new Instructor(fname, lname, email, pw, schoolId));
+                instructors.add(new Instructor(userId, fname, lname, email, pw, schoolId));
             }
             return instructors;
         }

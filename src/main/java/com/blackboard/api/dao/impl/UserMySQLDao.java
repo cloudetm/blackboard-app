@@ -44,13 +44,14 @@ public class UserMySQLDao
             {
                 if (r.next())
                 {
+                    int userId = r.getInt("userID");
                     String email = r.getString("email");
                     String fname = r.getString("fname");
                     String lname = r.getString("lname");
                     String encryptedPassword = r.getString("password");
                     int schoolId = r.getInt("school_id");
 
-                    return Optional.of(new User(fname, lname, email, encryptedPassword, schoolId));
+                    return Optional.of(new User(userId, fname, lname, email, encryptedPassword, schoolId));
                 }
                 else
                     return Optional.empty();

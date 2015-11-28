@@ -9,6 +9,8 @@ import org.mindrot.jbcrypt.BCrypt;
  */
 public class User
 {
+    private int userId;
+
     private String firstName;
 
     private String lastName;
@@ -26,6 +28,17 @@ public class User
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.schoolId = schoolId;
+    }
+
+
+    public User(int userId, String fname, String lname, String email, String encryptedPassword, int schoolId)
+    {
+        this.userId = userId;
+        firstName = fname;
+        lastName = lname;
+        this.email = email;
+        password = encryptedPassword;
         this.schoolId = schoolId;
     }
 
@@ -87,6 +100,18 @@ public class User
     public void setSchoolId(int schoolId)
     {
         this.schoolId = schoolId;
+    }
+
+
+    public int getUserId()
+    {
+        return userId;
+    }
+
+
+    public void setUserId(int userId)
+    {
+        this.userId = userId;
     }
 
 
