@@ -1,8 +1,9 @@
 package com.blackboard.api.dao;
 
+import com.blackboard.api.core.model.Assignment;
 import com.blackboard.api.core.model.Grade;
-import com.blackboard.api.core.model.Submission;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -19,9 +20,11 @@ public interface GradeDao
 
     Optional<Grade> deleteGradeById(int gradeId);
 
-    Optional<Grade> deleteGrade(Grade grade);
+    Optional<Grade> findGradeById(int gradeId);
 
-    Optional<Grade> findGradeBySubmission(Submission submission);
+    List<Grade> findGradesByAssignment(Assignment assignment);
+
+    Optional<Grade> findGradeBySubmission(int submissionId);
 
     Grade updateGrade(Grade grade);
 }

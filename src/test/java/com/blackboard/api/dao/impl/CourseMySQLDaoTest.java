@@ -48,7 +48,7 @@ public class CourseMySQLDaoTest
      * @throws SQLException
      */
     @Test
-    public void testFindCoursesOffered()
+    public void testFindSchoolCourses()
             throws SQLException
     {
         String coursesQuery = "SELECT * FROM courses WHERE school_id = ?";

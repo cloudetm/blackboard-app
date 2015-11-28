@@ -15,11 +15,13 @@ import java.util.Optional;
 
 public interface AssignmentDao
 {
+    Assignment createAssignment(Assignment assignment);
+
     Optional<Assignment> findAssignmentById(int assignmentId);
 
     Optional<Assignment> deleteAssignmentById(int assignmentId);
 
     Assignment updateAssignment(Assignment assignment);
 
-    Optional<List<Assignment>> findAllAssignmentsByCourseId(int courseId);
+    List<Assignment> findAllAssignmentsByCourseId(int courseId);
 }

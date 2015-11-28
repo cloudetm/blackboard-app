@@ -16,14 +16,14 @@ import java.util.Optional;
 
 public interface SubmissionDao
 {
-    Optional<Submission> findSubmissionByStudentAndAssignmentId(int studentId, int assignmentId);
+    Optional<Submission> findStudentSubmission(String studentEmail, int assignmentId);
 
-    Optional<Submission> deleteSubmission(Submission submission);
-
-    Optional<Submission> deleteSubmissionById(int submissionId);
+    Optional<Submission> deleteStudentSubmission(String studentEmail, int submissionId);
 
     Submission createSubmission(Submission submission);
 
-    Optional<List<Submission>> findSubmissionsByAssignment(Assignment assignment);
+    List<Submission> findSubmissionsByAssignment(Assignment assignment);
+
+    Submission updateSubmission(Submission submission);
 
 }

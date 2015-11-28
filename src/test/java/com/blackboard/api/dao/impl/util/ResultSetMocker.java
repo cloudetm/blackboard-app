@@ -2,8 +2,11 @@ package com.blackboard.api.dao.impl.util;
 
 import com.blackboard.api.core.Subject;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Optional;
 
 import static org.mockito.Mockito.mock;
@@ -145,5 +148,67 @@ public class ResultSetMocker
         when(resultSetMock.getInt("credits")).thenReturn(3, 3);
         return Optional.of(resultSetMock);
     }
+
+
+    public Optional<ResultSet> mockAutoGenerateKeyResultSet(int id)
+            throws SQLException
+    {
+        ResultSet resultSetMock = mock(ResultSet.class);
+        when(resultSetMock.next()).thenReturn(true).thenReturn(false);
+        when(resultSetMock.getInt(1)).thenReturn(id);
+        return Optional.of(resultSetMock);
+    }
+
+
+    public Optional<ResultSet> mockAssignmentResultSet(
+            int assignmentId,
+            int course_id, String instructions, String assignmentName, String assignmentFilename,
+            Date dateAssigned, Date dueDate, int total_points)
+            throws SQLException
+    {
+        ResultSet resultSetMock = mock(ResultSet.class);
+        when(resultSetMock.next()).thenReturn(true).thenReturn(false);
+        when(resultSetMock.getInt("assignment_id")).thenReturn(assignmentId);
+        when(resultSetMock.getInt("course_id")).thenReturn(course_id);
+        when(resultSetMock.getDate("due_date")).thenReturn(dueDate);
+        when(resultSetMock.getDate("assigned_date")).thenReturn(dateAssigned);
+        when(resultSetMock.getString("instructions")).thenReturn(instructions);
+        when(resultSetMock.getString("assignment_name")).thenReturn(assignmentName);
+        when(resultSetMock.getString("assignment_filename")).thenReturn(assignmentFilename);
+        when(resultSetMock.getInt("total_points")).thenReturn(total_points);
+        return Optional.of(resultSetMock);
+    }
+
+
+    public Optional<ResultSet> mockAssignmentMultiRowResultSet()
+            throws SQLException, ParseException
+    {
+        // Assigned Date Handling
+        String assignedDateString = "2014-01-28";
+        java.util.Date utilDate = new SimpleDateFormat("yyyy-MM-dd").parse(assignedDateString);
+        // because PreparedStatement#setDate(..) expects a java.sql.Date argument
+        Date assignedDate = new Date(utilDate.getTime());
+
+        //Due Date Handling
+        String dueDateString = "2014-01-31";
+        java.util.Date javaDate = new SimpleDateFormat("yyyy-MM-dd").parse(dueDateString);
+        // because PreparedStatement#setDate(..) expects a java.sql.Date argument
+        Date dueDate = new Date(javaDate.getTime());
+
+        ResultSet resultSetMock = mock(ResultSet.class);
+        when(resultSetMock.next()).thenReturn(true).thenReturn(true).thenReturn(false);
+        when(resultSetMock.getInt("assignment_id")).thenReturn(1, 3);
+        when(resultSetMock.getInt("course_id")).thenReturn(34, 198);
+        when(resultSetMock.getDate("due_date")).thenReturn(dueDate, dueDate);
+        when(resultSetMock.getDate("assigned_date")).thenReturn(assignedDate, assignedDate);
+        when(resultSetMock.getInt("total_points")).thenReturn(100, 200);
+        when(resultSetMock.getString("assignment_name")).thenReturn("test1", "test2");
+        when(resultSetMock.getString("assignment_filename")).thenReturn(
+                "test1.docx",
+                "test2.docx");
+        when(resultSetMock.getString("instructions")).thenReturn("Take it", "Take it Now");
+        return Optional.of(resultSetMock);
+    }
+
 
 }

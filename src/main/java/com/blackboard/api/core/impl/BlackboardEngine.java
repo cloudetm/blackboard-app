@@ -45,7 +45,7 @@ public class BlackboardEngine
     public static double calculateWeightedAverage(List<Grade> gradeList)
     {
         return gradeList.stream()
-                .mapToDouble((grade -> grade.getScore() * grade.getSubmission().getWeight()))
+                .mapToDouble((grade -> grade.getScore() * grade.getAssignment().getWeight()))
                 .sum();
     }
 

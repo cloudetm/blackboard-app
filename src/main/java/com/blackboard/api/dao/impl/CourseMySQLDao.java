@@ -84,7 +84,7 @@ public class CourseMySQLDao
 
 
     /**
-     * Find courses offered at a particular institution, using the school_id to locate the record in the
+     * Find a course offered at a particular institution, using the course_id to locate the record in the
      * database.
      *
      * @param course_id The uniquely identifying course_id of the course that is being searched

@@ -1,5 +1,7 @@
 package com.blackboard.api.core.model;
 
+import java.sql.Timestamp;
+
 /**
  * The Submission Model Object that corresponds to the submissions table in the database.
  * <p/>
@@ -7,51 +9,72 @@ package com.blackboard.api.core.model;
  */
 public class Submission
 {
+    int submissionId;
+
     private Grade grade;
 
     private Assignment assignment;
 
-    private double weight;
+    private Timestamp currentTimeStamp;
 
     private String studentEmail;
 
-    private String fileName;
+    private String submissionFileName;
 
 
     /**
      * The constructor for the Submission Model Object that corresponds with the situation, during which, a
      * student submits an assignment that has yet to be graded.
      *
+     * @param submissionId The id associated with the submission in the DB.
      * @param assignment   The assignment to which this submission corresponds.
-     * @param weight       The percentage of your overall course grade that is made up by said Submission.
      * @param studentEmail The email of the student whom submitted the work
-     * @param fileName     The filename associated with this submission.
+     * @param submissionFileName     The filename associated with this submission.
      */
-    public Submission(Assignment assignment, double weight, String studentEmail, String fileName)
+    public Submission(
+            int submissionId, Grade grade, Assignment assignment, String
+            studentEmail, String submissionFileName, Timestamp currentTimeStamp)
     {
+        this.submissionId = submissionId;
+        this.grade = grade;
         this.assignment = assignment;
-        this.weight = weight;
         this.studentEmail = studentEmail;
-        this.fileName = fileName;
+        this.submissionFileName = submissionFileName;
+        this.currentTimeStamp = currentTimeStamp;
     }
 
 
-    /**
-     * The full constructor for the Submission Model Object.
-     *
-     * @param grade        The grade earned on the work submitted
-     * @param assignment   The assignment to which this submission corresponds.
-     * @param weight       The percentage of your overall course grade that is made up by said Submission.
-     * @param studentEmail The email of the student whom submitted the work
-     * @param fileName     The filename associated with this submission.
-     */
-    public Submission(Grade grade, Assignment assignment, double weight, String studentEmail, String fileName)
+    public Submission(
+            int submissionId, Assignment assignment, String studentEmail, String submissionFileName,
+            Timestamp currentTimeStamp)
     {
-        this.grade = grade;
         this.assignment = assignment;
-        this.weight = weight;
         this.studentEmail = studentEmail;
-        this.fileName = fileName;
+        this.submissionFileName = submissionFileName;
+        this.currentTimeStamp = currentTimeStamp;
+    }
+
+
+    public Submission(
+            Assignment assignment, String studentEmail, String submissionFileName,
+            Timestamp currentTimeStamp)
+    {
+        this.assignment = assignment;
+        this.studentEmail = studentEmail;
+        this.submissionFileName = submissionFileName;
+        this.currentTimeStamp = currentTimeStamp;
+    }
+
+
+    public int getSubmissionId()
+    {
+        return submissionId;
+    }
+
+
+    public void setSubmissionId(int submissionId)
+    {
+        this.submissionId = submissionId;
     }
 
 
@@ -79,18 +102,6 @@ public class Submission
     }
 
 
-    public double getWeight()
-    {
-        return weight;
-    }
-
-
-    public void setWeight(double weight)
-    {
-        this.weight = weight;
-    }
-
-
     public String getStudentEmail()
     {
         return studentEmail;
@@ -103,14 +114,26 @@ public class Submission
     }
 
 
-    public String getFileName()
+    public String getSubmissionFileName()
     {
-        return fileName;
+        return submissionFileName;
     }
 
 
-    public void setFileName(String fileName)
+    public void setSubmissionFileName(String submissionFileName)
     {
-        this.fileName = fileName;
+        this.submissionFileName = submissionFileName;
+    }
+
+
+    public Timestamp getCurrentTimeStamp()
+    {
+        return currentTimeStamp;
+    }
+
+
+    public void setCurrentTimeStamp(Timestamp currentTimeStamp)
+    {
+        this.currentTimeStamp = currentTimeStamp;
     }
 }

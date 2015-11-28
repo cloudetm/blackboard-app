@@ -1,5 +1,7 @@
 package com.blackboard.api.core.model;
 
+import java.sql.Timestamp;
+
 /**
  * This is the Grade Model Class that maps to the grades table in the database.
  * <p/>
@@ -7,23 +9,48 @@ package com.blackboard.api.core.model;
  */
 public class Grade
 {
+    private int gradeId;
+
     private int score;
 
-    private Submission submission;
+    private Assignment assignment;
+
+    private int submissionId;
+
+    private String studentEmail;
+
+    private Timestamp timeSubmitted;
 
 
-    /**
-     * Full constructor for the Grade Model Object.
-     *
-     * @param score      The actual numerical value calculated based on the student's performance on the
-     *                   assessment in question
-     * @param submission The weight of that grade as it pertains to the course as a whole.
-     */
+    public Grade(
+            int gradeId,
+            int score,
+            Assignment assignment,
+            int submissionId,
+            String studentEmail,
+            Timestamp timeSubmitted)
+    {
+        this.gradeId = gradeId;
+        this.score = score;
+        this.assignment = assignment;
+        this.submissionId = submissionId;
+        this.studentEmail = studentEmail;
+        this.timeSubmitted = timeSubmitted;
+    }
 
-    public Grade(int score, Submission submission)
+
+    public Grade(
+            int score,
+            Assignment assignment,
+            int submissionId,
+            String studentEmail,
+            Timestamp timeSubmitted)
     {
         this.score = score;
-        this.submission = submission;
+        this.assignment = assignment;
+        this.submissionId = submissionId;
+        this.studentEmail = studentEmail;
+        this.timeSubmitted = timeSubmitted;
     }
 
 
@@ -39,14 +66,62 @@ public class Grade
     }
 
 
-    public Submission getSubmission()
+    public Timestamp getTimeSubmitted()
     {
-        return submission;
+        return timeSubmitted;
     }
 
 
-    public void setSubmission(Submission submission)
+    public void setTimeSubmitted(Timestamp timeSubmitted)
     {
-        this.submission = submission;
+        this.timeSubmitted = timeSubmitted;
+    }
+
+
+    public int getSubmissionId()
+    {
+        return submissionId;
+    }
+
+
+    public void setSubmissionId(int submissionId)
+    {
+        this.submissionId = submissionId;
+    }
+
+
+    public String getStudentEmail()
+    {
+        return studentEmail;
+    }
+
+
+    public void setStudentEmail(String studentEmail)
+    {
+        this.studentEmail = studentEmail;
+    }
+
+
+    public int getGradeId()
+    {
+        return gradeId;
+    }
+
+
+    public void setGradeId(int gradeId)
+    {
+        this.gradeId = gradeId;
+    }
+
+
+    public Assignment getAssignment()
+    {
+        return assignment;
+    }
+
+
+    public void setAssignment(Assignment assignment)
+    {
+        this.assignment = assignment;
     }
 }

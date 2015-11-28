@@ -3,6 +3,7 @@ package com.blackboard.api.dao.util;
 import com.sun.media.jfxmedia.logging.Logger;
 
 import java.sql.*;
+import java.util.Calendar;
 import java.util.Optional;
 
 /**
@@ -45,7 +46,7 @@ public class MySQLDao
             throws SQLException
     {
         // Return the id of the data row we created, deleted, or update in the DB
-        PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement statement = connection.prepareStatement(sql);
         for (int i = 0; i < args.length; i++)
         {
             Object arg = args[i];
@@ -72,13 +73,14 @@ public class MySQLDao
      * @param sql  The MySQL statement being prepared
      * @param args The variadic variables being passed into the parameters of the query.
      */
-    public Optional<Integer> update(String sql, Object... args)
+    public Optional<ResultSet> update(String sql, Object... args)
     {
         try
         {
             PreparedStatement statement = prepareStatement(connection, sql, args);
             statement.setQueryTimeout(30);  // set timeout to 30 sec.
-            return Optional.of(statement.executeUpdate());
+            statement.executeUpdate();
+            return Optional.of(statement.getGeneratedKeys());
         }
         catch (SQLException e)
         {
@@ -228,6 +230,19 @@ public class MySQLDao
         }
     }
 
+
+    public Timestamp generateTimeStamp()
+    {
+        // 1) create a java calendar instance
+        Calendar calendar = Calendar.getInstance();
+
+        // 2) get a java.util.Date from the calendar instance.
+        //    this date will represent the current instant, or "now".
+        java.util.Date now = calendar.getTime();
+
+        // 3) a java current time (now) instance
+        return new java.sql.Timestamp(now.getTime());
+    }
 
     private static void exitApplication()
     {

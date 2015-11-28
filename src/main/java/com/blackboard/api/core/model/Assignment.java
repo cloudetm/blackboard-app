@@ -19,6 +19,8 @@ public class Assignment
 
     private String instructions;
 
+    private double weight;
+
     private int totalPoints;
 
     private Date dateAssigned;
@@ -27,7 +29,7 @@ public class Assignment
 
 
     /**
-     * Full Constructor for the Assignment Model Class
+     * Semi-Full Constructor for the Assignment Model Class
      *
      * @param course             The Course to which this assignment belongs.
      * @param assignmentName     Name and FileName of the Assignment in Question
@@ -46,6 +48,36 @@ public class Assignment
             Date dateAssigned,
             Date dueDate)
     {
+        this.course = course;
+        this.assignmentName = assignmentName;
+        this.assignmentFileName = assignmentFileName;
+        this.instructions = instructions;
+        this.totalPoints = totalPoints;
+        this.dateAssigned = dateAssigned;
+        this.dueDate = dueDate;
+    }
+
+
+    /**
+     * Full Constructor for the Assignment Model Class
+     *
+     * @param assignmentId       The id of the assignment in the DB.
+     * @param course             The Course to which this assignment belongs.
+     * @param assignmentName     Name and FileName of the Assignment in Question
+     * @param assignmentFileName FileName of the Assignment in Question
+     * @param instructions       Instructions, detailing how to complete the assignment
+     * @param totalPoints        Total points to potentially earn in the completion of the assignment
+     * @param dateAssigned       Date when the assignment was posted
+     * @param dueDate            Expected duedate of the assignment.
+     */
+    public Assignment(
+            int assignmentId,
+            Course course,
+            String assignmentName,
+            String assignmentFileName,
+            String instructions, int totalPoints, Date dateAssigned, Date dueDate)
+    {
+        this.assignmentId = assignmentId;
         this.course = course;
         this.assignmentName = assignmentName;
         this.assignmentFileName = assignmentFileName;
@@ -149,5 +181,17 @@ public class Assignment
     public void setAssignmentId(int assignmentId)
     {
         this.assignmentId = assignmentId;
+    }
+
+
+    public double getWeight()
+    {
+        return weight;
+    }
+
+
+    public void setWeight(double weight)
+    {
+        this.weight = weight;
     }
 }

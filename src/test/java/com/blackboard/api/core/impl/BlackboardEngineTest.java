@@ -2,7 +2,7 @@ package com.blackboard.api.core.impl;
 
 import com.blackboard.api.core.model.Course;
 import com.blackboard.api.core.model.Grade;
-import com.blackboard.api.core.model.Submission;
+import com.blackboard.api.core.model.Assignment;
 import com.blackboard.api.core.model.Transcript;
 import org.junit.Test;
 
@@ -65,9 +65,9 @@ public class BlackboardEngineTest
         Grade g1 = mock(Grade.class);
         Grade g2 = mock(Grade.class);
         Grade g3 = mock(Grade.class);
-        Submission s1 = mock(Submission.class);
-        Submission s2 = mock(Submission.class);
-        Submission s3 = mock(Submission.class);
+        Assignment s1 = mock(Assignment.class);
+        Assignment s2 = mock(Assignment.class);
+        Assignment s3 = mock(Assignment.class);
         grades.add(g1);
         grades.add(g2);
         grades.add(g3);
@@ -75,9 +75,9 @@ public class BlackboardEngineTest
         when(g1.getScore()).thenReturn(90);
         when(g2.getScore()).thenReturn(93);
         when(g3.getScore()).thenReturn(86);
-        when(g1.getSubmission()).thenReturn(s1);
-        when(g2.getSubmission()).thenReturn(s2);
-        when(g3.getSubmission()).thenReturn(s3);
+        when(g1.getAssignment()).thenReturn(s1);
+        when(g2.getAssignment()).thenReturn(s2);
+        when(g3.getAssignment()).thenReturn(s3);
         when(s1.getWeight()).thenReturn(.3);
         when(s2.getWeight()).thenReturn(.5);
         when(s3.getWeight()).thenReturn(.2);
