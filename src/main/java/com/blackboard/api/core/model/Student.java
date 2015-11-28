@@ -22,9 +22,10 @@ public class Student
      * @param password  The student's unencrypted password
      * @param schoolId  The student's home institution
      */
-    public Student(String firstName, String lastName, String email, String password, int schoolId)
+    public Student(int userId, String firstName, String lastName, String email, String password, int schoolId)
     {
         super(firstName, lastName, email, password, schoolId);
+        this.setUserId(userId);
         this.setFirstName(firstName);
         this.setLastName(lastName);
         this.setEmail(email);
@@ -43,10 +44,13 @@ public class Student
      * @param schoolId  The student's home institution
      * @param gpa       The student's grade point average
      */
-    public Student(String firstName, String lastName, String email, String password, int schoolId, double gpa)
+    public Student(
+            int userId, String firstName, String lastName, String email, String password, int
+            schoolId,
+            double gpa)
     {
         super(firstName, lastName, email, password, schoolId);
-
+        this.setUserId(userId);
         this.setFirstName(firstName);
         this.setLastName(lastName);
         this.setEmail(email);
@@ -55,6 +59,28 @@ public class Student
         this.setGpa(gpa);
     }
 
+
+    public Student(String firstName, String lastName, String email, String password, int schoolId, double gpa)
+    {
+        super(firstName, lastName, email, password, schoolId);
+        this.setFirstName(firstName);
+        this.setLastName(lastName);
+        this.setEmail(email);
+        this.setPassword(password);
+        this.setSchoolId(schoolId);
+        this.gpa = gpa;
+    }
+
+
+    public Student(String firstName, String lastName, String email, String password, int schoolId)
+    {
+        super(firstName, lastName, email, password, schoolId);
+        this.setFirstName(firstName);
+        this.setLastName(lastName);
+        this.setEmail(email);
+        this.setPassword(password);
+        this.setSchoolId(schoolId);
+    }
 
     public double getGpa()
     {
