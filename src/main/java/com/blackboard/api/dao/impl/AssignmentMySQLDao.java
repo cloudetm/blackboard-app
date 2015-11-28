@@ -101,8 +101,7 @@ public class AssignmentMySQLDao
                     String assignmentFileName = result.getString("assignment_filename");
 
                     // Find Course Object
-                    CourseMySQLDao courseDao = new CourseMySQLDao(dao);
-                    Course course = courseDao.findCourseById(courseId).get();
+                    Course course = getNewCourseMySQLDao(dao).findCourseById(courseId).get();
 
                     return Optional
                             .of(new Assignment(assignmentId, course, assignmentName, assignmentFileName,
@@ -119,6 +118,10 @@ public class AssignmentMySQLDao
                 return Optional.empty();
             }
         });
+    }
+
+    public CourseMySQLDao getNewCourseMySQLDao(MySQLDao dao) {
+        return new CourseMySQLDao(dao);
     }
 
 
@@ -196,7 +199,7 @@ public class AssignmentMySQLDao
                 String assignmentName = result.getString("assignment_name");
                 String assignmentFileName = result.getString("assignment_filename");
 
-                CourseMySQLDao courseDao = new CourseMySQLDao(dao);
+                CourseMySQLDao courseDao = getNewCourseMySQLDao(dao);
                 Course course = courseDao.findCourseById(resCourseId).get();
 
                 assignments.add(new Assignment(assignmentId, course, assignmentName, assignmentFileName,
