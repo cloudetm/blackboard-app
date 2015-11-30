@@ -26,10 +26,10 @@ public class Submission
      * The constructor for the Submission Model Object that corresponds with the situation, during which, a
      * student submits an assignment that has yet to be graded.
      *
-     * @param submissionId The id associated with the submission in the DB.
-     * @param assignment   The assignment to which this submission corresponds.
-     * @param studentEmail The email of the student whom submitted the work
-     * @param submissionFileName     The filename associated with this submission.
+     * @param submissionId       The id associated with the submission in the DB.
+     * @param assignment         The assignment to which this submission corresponds.
+     * @param studentEmail       The email of the student whom submitted the work
+     * @param submissionFileName The filename associated with this submission.
      */
     public Submission(
             int submissionId, Grade grade, Assignment assignment, String

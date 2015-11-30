@@ -22,13 +22,19 @@ public class Grade
     private Timestamp timeSubmitted;
 
 
+    /**
+     * @param gradeId
+     * @param score
+     * @param assignment
+     * @param submissionId
+     * @param studentEmail
+     */
     public Grade(
             int gradeId,
             int score,
             Assignment assignment,
             int submissionId,
-            String studentEmail,
-            Timestamp timeSubmitted)
+            String studentEmail)
     {
         this.gradeId = gradeId;
         this.score = score;
@@ -39,13 +45,64 @@ public class Grade
     }
 
 
+    /**
+     * @param score
+     * @param assignment
+     * @param submissionId
+     * @param studentEmail
+     */
     public Grade(
+            int score,
+            Assignment assignment,
+            int submissionId,
+            String studentEmail)
+    {
+        this.score = score;
+        this.assignment = assignment;
+        this.submissionId = submissionId;
+        this.studentEmail = studentEmail;
+
+    }
+
+
+    /**
+     * @param score
+     * @param assignment
+     * @param submissionId
+     * @param studentEmail
+     * @param timeSubmitted
+     */
+    public Grade(
+            int score,
+            Assignment assignment,
+            int submissionId,
+            String studentEmail, Timestamp timeSubmitted)
+    {
+        this.score = score;
+        this.assignment = assignment;
+        this.submissionId = submissionId;
+        this.studentEmail = studentEmail;
+        this.timeSubmitted = timeSubmitted;
+    }
+
+
+    /**
+     * @param gradeId
+     * @param score
+     * @param assignment
+     * @param submissionId
+     * @param studentEmail
+     * @param timeSubmitted
+     */
+    public Grade(
+            int gradeId,
             int score,
             Assignment assignment,
             int submissionId,
             String studentEmail,
             Timestamp timeSubmitted)
     {
+        this.gradeId = gradeId;
         this.score = score;
         this.assignment = assignment;
         this.submissionId = submissionId;

@@ -81,7 +81,6 @@ public class Transcript
     }
 
 
-
     public String getStudentEmail()
     {
         return studentEmail;

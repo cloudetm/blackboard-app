@@ -23,6 +23,4 @@ public interface StudentDao
 
     List<Student> findStudentsByCourseId(int courseId);
 
-
-
 }

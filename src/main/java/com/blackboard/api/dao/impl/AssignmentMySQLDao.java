@@ -119,7 +119,9 @@ public class AssignmentMySQLDao
         });
     }
 
-    public CourseMySQLDao getNewCourseMySQLDao(MySQLDao dao) {
+
+    public CourseMySQLDao getNewCourseMySQLDao(MySQLDao dao)
+    {
         return new CourseMySQLDao(dao);
     }
 

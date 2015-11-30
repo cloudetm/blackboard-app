@@ -32,7 +32,7 @@ public class Instructor
 
     public Instructor(int userId, String fname, String lname, String email, String pw, int schoolId)
     {
-        super(fname,lname,email,pw,schoolId);
+        super(fname, lname, email, pw, schoolId);
         this.setUserId(userId);
     }
 

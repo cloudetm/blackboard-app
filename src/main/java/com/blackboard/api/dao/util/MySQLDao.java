@@ -25,7 +25,6 @@ public class MySQLDao
     private String db;
 
 
-
     /**
      * Constructs and prepares the SQL Statement with the given parameters.
      * <p/>
@@ -247,6 +246,7 @@ public class MySQLDao
         // 3) a java current time (now) instance
         return new java.sql.Timestamp(now.getTime());
     }
+
 
     private static void exitApplication()
     {

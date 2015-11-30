@@ -82,6 +82,7 @@ public class Student
         this.setSchoolId(schoolId);
     }
 
+
     public double getGpa()
     {
         return gpa;
