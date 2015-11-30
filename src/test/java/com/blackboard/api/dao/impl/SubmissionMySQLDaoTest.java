@@ -1,6 +1,5 @@
 package com.blackboard.api.dao.impl;
 
-
 import com.blackboard.api.core.model.Assignment;
 import com.blackboard.api.core.model.Submission;
 import com.blackboard.api.dao.impl.util.ResultSetMocker;
@@ -10,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.ByteArrayOutputStream;
@@ -23,30 +21,41 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SubmissionMySQLDaoTest {
+public class SubmissionMySQLDaoTest
+{
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 
     @Mock
     Submission mockedSubmission;
+
     @Mock
     Assignment mockedAssignment;
+
     @Mock
     MySQLDao dao;
 
     private SubmissionMySQLDao submissionDao;
+
     private int assignmentId = 123;
+
     private String studentEmail = "cmlicata@gwu.edu";
+
     // don't we like this getTime().getTime() thing ??? Java...
     private Timestamp timeStamp = new Timestamp(Calendar.getInstance().getTime().getTime());
+
     private String submissionFileName = "submission_file_name.txt";
 
+
     @Before
-    public void setUp() {
+    public void setUp()
+    {
         // with this you can test if anything is printed to standard output (like SQLException printing)
         System.setOut(new PrintStream(outContent));
         System.setErr(new PrintStream(errContent));
@@ -61,15 +70,25 @@ public class SubmissionMySQLDaoTest {
         when(mockedSubmission.getSubmissionFileName()).thenReturn(submissionFileName);
     }
 
+
     @After
-    public void tearDown() throws Exception {
+    public void tearDown()
+            throws Exception
+    {
         System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
         System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
     }
 
 
+    /**
+     * Testing for the creation of Submissions -- expecting Success.
+     *
+     * @throws SQLException
+     */
     @Test
-    public void testCreateSubmission() throws Exception {
+    public void testCreateSubmission()
+            throws Exception
+    {
         String submissionSQLQuery = new StringBuilder()
                 .append("INSERT INTO submissions(assignment_id, student_email, date_time_submitted, ")
                 .append("submission_filename")
@@ -78,22 +97,29 @@ public class SubmissionMySQLDaoTest {
                 assignmentId, studentEmail, timeStamp, submissionFileName
         );
 
-        when(dao.update(submissionSQLQuery, assignmentId, studentEmail, timeStamp, submissionFileName)).thenReturn(submissionResultSet);
+        when(dao.update(submissionSQLQuery, assignmentId, studentEmail, timeStamp, submissionFileName))
+                .thenReturn(submissionResultSet);
 
         Submission submission = submissionDao.createSubmission(mockedSubmission);
 
-        verify(dao, times(1)).update(submissionSQLQuery, assignmentId, studentEmail, timeStamp, submissionFileName);
+        verify(dao, times(1))
+                .update(submissionSQLQuery, assignmentId, studentEmail, timeStamp, submissionFileName);
         verify(mockedSubmission, times(1)).setSubmissionId(anyInt());
         verify(mockedSubmission, times(1)).setCurrentTimeStamp(timeStamp);
         assertTrue(outContent.toString().length() == 0);
     }
 
-    /*
-    How to test that exceptions are actually thrown, even with an implementation where exceptions are
-    printed to the standard output
+
+    /**
+     * How to test that exceptions are actually thrown, even with an implementation where exceptions are
+     * printed to the standard output
+     *
+     * @throws Exception
      */
     @Test
-    public void testFindStudentSubmissionThrowsAnSQLException() throws Exception {
+    public void testFindStudentSubmissionThrowsAnSQLException()
+            throws Exception
+    {
         String submissionSQLQuery = "SELECT * FROM submissions WHERE student_email = ? AND assignment_id = ?";
         ResultSet hardResult = new ResultSetMocker().mockSubmissionResultSet(
                 assignmentId, studentEmail, timeStamp, submissionFileName

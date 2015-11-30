@@ -1,7 +1,8 @@
-package com.blackboard.api.dao;
+package com.blackboard.api.dao.impl;
 
 import com.blackboard.api.core.model.Transcript;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -14,9 +15,13 @@ import java.util.Optional;
 
 public interface TranscriptDao
 {
-    Optional<Transcript> findTranscriptByEmail(String studentEmail);
+    List<Transcript> findTranscriptsByStudentEmail(String studentEmail);
+
+    Optional<Transcript> findTranscriptByTranscriptId(int transcriptId);
 
     Transcript updateTranscript(Transcript transcript);
 
     Transcript createTranscript(Transcript transcript);
+
+    Optional<Transcript> deleteTranscript(int transcriptId);
 }

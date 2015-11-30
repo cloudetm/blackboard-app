@@ -307,7 +307,13 @@ public class CourseMySQLDaoTest
         when(mockCourse.getSyllabusFileName()).thenReturn("aws_rtfm_guide.pdf");
         when(mockCourse.getMaxCapacity()).thenReturn(49);
 
+        Optional<ResultSet> courseId = resultSet.mockAutoGenerateKeyResultSet(1);
+
+        when(dao.update(query, "MATH", 3334, 14, "googler@gmail.com", "AWS Studies",
+                        "aws_rtfm_guide.pdf", 49, 3)).thenReturn(courseId);
+
         courseDao.createCourse(mockSchool, mockCourse);
+
         verify(dao).update(query, "MATH", 3334, 14, "googler@gmail.com", "AWS Studies",
                            "aws_rtfm_guide.pdf", 49, 3);
 

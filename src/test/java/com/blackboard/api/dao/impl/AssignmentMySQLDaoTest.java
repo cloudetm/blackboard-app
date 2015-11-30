@@ -59,6 +59,11 @@ public class AssignmentMySQLDaoTest {
     }
 
 
+    /**
+     * Testing for the creation of Assignmentss -- expecting Success.
+     *
+     * @throws SQLException
+     */
     @Test
     public void testCreateAssignment()
             throws SQLException, ParseException {

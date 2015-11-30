@@ -1,5 +1,6 @@
 package com.blackboard.api.dao.util;
 
+import com.mysql.jdbc.Driver;
 import com.sun.media.jfxmedia.logging.Logger;
 
 import java.sql.*;
@@ -16,14 +17,13 @@ public class MySQLDao
 {
     private Connection connection = null;
 
+    private Driver driver;
+
     /**
      * This data is being retrieved via the external configuration .yml file
      */
     private String db;
 
-    private String username;
-
-    private String password;
 
 
     /**
@@ -46,7 +46,7 @@ public class MySQLDao
             throws SQLException
     {
         // Return the id of the data row we created, deleted, or update in the DB
-        PreparedStatement statement = connection.prepareStatement(sql);
+        PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         for (int i = 0; i < args.length; i++)
         {
             Object arg = args[i];
@@ -210,18 +210,22 @@ public class MySQLDao
      * Creates a persistent connection to the Database
      *
      * @param dburl The URI to the database.
-     * @param user  The username of the admin user on the database.
-     * @param pw    The password of the admin user on the database.
      */
-    public void setDb(String dburl, String user, String pw)
+    public void setDb(String dburl)
     {
         db = dburl;
-        username = user;
-        password = pw;
         try
         {
+            try
+            {
+                Class.forName("com.mysql.jdbc.Driver");
+            }
+            catch (ClassNotFoundException e)
+            {
+                System.out.println(e);
+            }
 
-            connection = DriverManager.getConnection(db, username, password);
+            connection = DriverManager.getConnection(db);
         }
         catch (SQLException e)
         {

@@ -9,6 +9,8 @@ import com.blackboard.api.core.Season;
  */
 public class Transcript
 {
+    private int transcriptId;
+
     private String studentEmail;
 
     private Season semester;
@@ -17,7 +19,7 @@ public class Transcript
 
     private Course course;
 
-    private Grade grade;
+    private double grade;
 
 
     /**
@@ -30,14 +32,54 @@ public class Transcript
      * @param grade        The grade that the student received in the course.
      */
 
-    public Transcript(String studentEmail, Season semester, int year, Course course, Grade grade)
+    public Transcript(
+            int transcriptId, String studentEmail, Season semester, int year, Course course, double
+            grade)
     {
+        this.transcriptId = transcriptId;
         this.studentEmail = studentEmail;
         this.semester = semester;
         this.year = year;
         this.course = course;
         this.grade = grade;
     }
+
+
+    /**
+     * Transcript Constructor used for the initial creation of a Transcript in the DB
+     *
+     * @param studentEmail
+     * @param semester
+     * @param year
+     * @param course
+     */
+    public Transcript(String studentEmail, Season semester, int year, Course course)
+    {
+        this.studentEmail = studentEmail;
+        this.semester = semester;
+        this.year = year;
+        this.course = course;
+    }
+
+
+    /**
+     * Transcript Constructor used to return the created Transcript in the DB after creation or during find
+     *
+     * @param transcriptId
+     * @param studentEmail
+     * @param semester
+     * @param year
+     * @param course
+     */
+    public Transcript(int transcriptId, String studentEmail, Season semester, int year, Course course)
+    {
+        this.transcriptId = transcriptId;
+        this.studentEmail = studentEmail;
+        this.semester = semester;
+        this.year = year;
+        this.course = course;
+    }
+
 
 
     public String getStudentEmail()
@@ -88,14 +130,26 @@ public class Transcript
     }
 
 
-    public Grade getGrade()
+    public double getGrade()
     {
         return grade;
     }
 
 
-    public void setGrade(Grade grade)
+    public void setGrade(int grade)
     {
         this.grade = grade;
+    }
+
+
+    public int getTranscriptId()
+    {
+        return transcriptId;
+    }
+
+
+    public void setTranscriptId(int transcriptId)
+    {
+        this.transcriptId = transcriptId;
     }
 }

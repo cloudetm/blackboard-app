@@ -1,4 +1,4 @@
-package com.blackboard.api.dao;
+package com.blackboard.api.dao.impl;
 
 import com.blackboard.api.core.model.Student;
 
@@ -20,5 +20,9 @@ public interface StudentDao
     Optional<Student> findStudentByEmail(String email);
 
     List<Student> findAllStudents();
+
+    List<Student> findStudentsByCourseId(int courseId);
+
+
 
 }

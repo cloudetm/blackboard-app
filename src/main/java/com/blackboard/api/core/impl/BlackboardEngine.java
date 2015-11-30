@@ -67,7 +67,7 @@ public class BlackboardEngine
         for (Transcript transcript : transcripts)
         {
             int credits = transcript.getCourse().getCredits();
-            int grade = transcript.getGrade().getScore();
+            double grade = transcript.getGrade();
             totalPoints += (credits * 100);
             earnedPoints += (credits * grade);
         }

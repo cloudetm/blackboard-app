@@ -1,3 +1,1 @@
-db: jdbc:mysql://blackboard-db-prod01.cd0fd80v826l.us-west-2.rds.amazonaws.com:3306/blackboard_prod01
-username: cmlicata
-password: timmykim123
+db: jdbc:mysql://localhost:3306/blackboard_prod01?user=cmlicata&password=timmykim123&useUnicode=true&characterEncoding=UTF-8

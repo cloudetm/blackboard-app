@@ -1,4 +1,4 @@
-package com.blackboard.api.dao;
+package com.blackboard.api.dao.impl;
 
 import com.blackboard.api.core.model.Course;
 import com.blackboard.api.core.model.School;
@@ -16,10 +16,12 @@ public interface CourseDao
 {
     List<Course> findCoursesOffered(School school);
 
-    Optional<Course> findCourseById(int course_id);
+    Optional<Course> findCourseById(int courseId);
 
     Course createCourse(School school, Course course);
 
     Optional<Course> deleteCourseById(int courseId);
+
+    List<Course> findCoursesByInstructor(String instructorEmail);
 
 }

@@ -108,24 +108,18 @@ public class BlackboardEngineTest
         Course c1 = mock(Course.class);
         Course c2 = mock(Course.class);
         Course c3 = mock(Course.class);
-        Grade g1 = mock(Grade.class);
-        Grade g2 = mock(Grade.class);
-        Grade g3 = mock(Grade.class);
         transcripts.add(t1);
         transcripts.add(t2);
         transcripts.add(t3);
 
-        when(g1.getScore()).thenReturn(90);
-        when(g2.getScore()).thenReturn(93);
-        when(g3.getScore()).thenReturn(86);
         when(c1.getCredits()).thenReturn(3);
         when(c2.getCredits()).thenReturn(3);
         when(c3.getCredits()).thenReturn(4);
-        when(t1.getGrade()).thenReturn(g1);
+        when(t1.getGrade()).thenReturn(90.0);
         when(t1.getCourse()).thenReturn(c1);
-        when(t2.getGrade()).thenReturn(g2);
+        when(t2.getGrade()).thenReturn(93.0);
         when(t2.getCourse()).thenReturn(c2);
-        when(t3.getGrade()).thenReturn(g3);
+        when(t3.getGrade()).thenReturn(86.0);
         when(t3.getCourse()).thenReturn(c3);
 
         double average = BlackboardEngine.calculateGPA(transcripts);

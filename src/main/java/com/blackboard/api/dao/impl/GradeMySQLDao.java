@@ -2,7 +2,6 @@ package com.blackboard.api.dao.impl;
 
 import com.blackboard.api.core.model.Assignment;
 import com.blackboard.api.core.model.Grade;
-import com.blackboard.api.dao.GradeDao;
 import com.blackboard.api.dao.util.MySQLDao;
 
 import java.sql.ResultSet;
@@ -182,15 +181,16 @@ public class GradeMySQLDao
     public Grade updateGrade(Grade grade)
     {
         String query = new StringBuilder("UPDATE grades SET assignment_id = ?, submission_id = ?, ")
-                .append("student_email = ?, score = ?, submitted_time = ?")
+                .append("student_email = ?, score = ?, submitted_time = ? WHERE grade_id  = ?")
                 .toString();
+        int gradeId = grade.getGradeId();
         int assignmentId = grade.getAssignment().getAssignmentId();
         int submissionId = grade.getSubmissionId();
         String studentEmail = grade.getStudentEmail();
         int score = grade.getScore();
         Timestamp timestamp = dao.generateTimeStamp();
 
-        dao.update(query, assignmentId, submissionId, studentEmail, score, timestamp);
+        dao.update(query, assignmentId, submissionId, studentEmail, score, timestamp, gradeId);
 
         return grade;
 

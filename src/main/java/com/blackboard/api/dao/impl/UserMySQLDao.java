@@ -2,7 +2,6 @@ package com.blackboard.api.dao.impl;
 
 import com.blackboard.api.core.model.Student;
 import com.blackboard.api.core.model.User;
-import com.blackboard.api.dao.UserDao;
 import com.blackboard.api.dao.util.MySQLDao;
 
 import java.sql.SQLException;
@@ -79,6 +78,7 @@ public class UserMySQLDao
         String email = user.getEmail();
         String password = user.getPassword();
         int schoolId = user.getSchoolId();
+
         if (user instanceof Student)
         {
             double gpa = ((Student) user).getGpa();
@@ -98,6 +98,7 @@ public class UserMySQLDao
      * Delete a user from the database, using the user's email to uniquely identify him or her
      *
      * @param email The email of the user that we are trying to delete from the database.
+     *
      * @return user The user that was just deleted from the database
      */
 

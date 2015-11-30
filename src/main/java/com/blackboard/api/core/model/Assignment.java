@@ -44,6 +44,7 @@ public class Assignment
             String assignmentName,
             String assignmentFileName,
             String instructions,
+            double weight,
             int totalPoints,
             Date dateAssigned,
             Date dueDate)
@@ -52,6 +53,7 @@ public class Assignment
         this.assignmentName = assignmentName;
         this.assignmentFileName = assignmentFileName;
         this.instructions = instructions;
+        this.weight = weight;
         this.totalPoints = totalPoints;
         this.dateAssigned = dateAssigned;
         this.dueDate = dueDate;
@@ -85,6 +87,28 @@ public class Assignment
         this.totalPoints = totalPoints;
         this.dateAssigned = dateAssigned;
         this.dueDate = dueDate;
+    }
+
+
+    /**
+     * @param assignmentId
+     * @param course
+     * @param assignmentName
+     * @param assignmentFileName
+     * @param instructions
+     * @param weight
+     * @param totalPoints
+     * @param dateAssigned
+     * @param dueDate
+     */
+    public Assignment(
+            int assignmentId,
+            Course course,
+            String assignmentName,
+            String assignmentFileName,
+            String instructions, double weight, int totalPoints, Date dateAssigned, Date dueDate)
+    {
+
     }
 
 

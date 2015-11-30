@@ -101,4 +101,12 @@ public class Student
         return new Student(firstName, lastName, email, encryptPassword(pw), schoolId, gpa);
     }
 
+
+    static public Student createStudent(
+            String firstName, String lastName, String email, String pw, int
+            schoolId)
+    {
+        return new Student(firstName, lastName, email, encryptPassword(pw), schoolId);
+    }
+
 }

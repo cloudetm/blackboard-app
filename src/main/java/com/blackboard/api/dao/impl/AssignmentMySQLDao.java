@@ -2,7 +2,6 @@ package com.blackboard.api.dao.impl;
 
 import com.blackboard.api.core.model.Assignment;
 import com.blackboard.api.core.model.Course;
-import com.blackboard.api.dao.AssignmentDao;
 import com.blackboard.api.dao.util.MySQLDao;
 
 import java.sql.Date;

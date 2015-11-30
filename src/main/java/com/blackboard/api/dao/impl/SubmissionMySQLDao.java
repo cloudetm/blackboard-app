@@ -3,7 +3,6 @@ package com.blackboard.api.dao.impl;
 import com.blackboard.api.core.model.Assignment;
 import com.blackboard.api.core.model.Grade;
 import com.blackboard.api.core.model.Submission;
-import com.blackboard.api.dao.SubmissionDao;
 import com.blackboard.api.dao.util.MySQLDao;
 
 import java.sql.ResultSet;

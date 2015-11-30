@@ -1,4 +1,4 @@
-package com.blackboard.api.dao;
+package com.blackboard.api.dao.impl;
 
 import com.blackboard.api.core.model.User;
 

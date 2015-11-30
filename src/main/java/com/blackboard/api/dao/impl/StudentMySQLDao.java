@@ -1,7 +1,6 @@
 package com.blackboard.api.dao.impl;
 
 import com.blackboard.api.core.model.Student;
-import com.blackboard.api.dao.StudentDao;
 import com.blackboard.api.dao.util.MySQLDao;
 
 import java.sql.ResultSet;
@@ -142,6 +141,42 @@ public class StudentMySQLDao
             return new ArrayList<>();
         }
     }
+
+
+    @Override
+    public List<Student> findStudentsByCourseId(int courseId)
+    {
+
+        String q = new StringBuilder()
+                .append("SELECT userID, fname, lname, email, password, gpa, users.school_id FROM users")
+                .append(" JOIN transcripts ON users.email = transcripts.student_email JOIN courses ON ")
+                .append("transcripts.course_id = courses.course_id WHERE transcripts.course_id = ?")
+                .toString();
+        try
+        {
+            ResultSet result = dao.query(q, courseId).get();
+
+            ArrayList<Student> students = new ArrayList<>();
+            while (result.next())
+            {
+                int userId = result.getInt("userID");
+                String fname = result.getString("fname");
+                String lname = result.getString("lname");
+                String email = result.getString("email");
+                String pw = result.getString("password");
+                int schoolId = result.getInt("school_id");
+                double gpa = result.getDouble("gpa");
+                students.add(new Student(userId, fname, lname, email, pw, schoolId, gpa));
+            }
+            return students;
+        }
+        catch (SQLException e)
+        {
+            printSQLException(e);
+            return new ArrayList<>();
+        }
+    }
+
 }
 
 
