@@ -12,6 +12,13 @@
     <dependencies>
 
         <dependency>
+            <groupId>com.sun</groupId>
+            <artifactId>sa-jdi</artifactId>
+            <version>1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/sa-jdi.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>
             <version>0.3m</version>
@@ -97,5 +104,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
