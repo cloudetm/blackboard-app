@@ -1,6 +1,7 @@
 package com.blackboard.api.dao.impl;
 
 import com.blackboard.api.core.model.Instructor;
+import com.blackboard.api.dao.impl.interfaces.InstructorDao;
 import com.blackboard.api.dao.util.MySQLDao;
 
 import java.sql.ResultSet;
@@ -50,7 +51,7 @@ public class InstructorMySQLDao
         try
         {
             // Assign the row id to the assignmentId for easy access
-            instructor.setUserId(instructorId.get().getInt(1));
+            instructor.setUserId(instructorId.get().getInt("userID"));
             // Closing result set for good form.
             instructorId.get().close();
 

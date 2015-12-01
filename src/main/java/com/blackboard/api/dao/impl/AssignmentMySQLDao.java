@@ -2,6 +2,7 @@ package com.blackboard.api.dao.impl;
 
 import com.blackboard.api.core.model.Assignment;
 import com.blackboard.api.core.model.Course;
+import com.blackboard.api.dao.impl.interfaces.AssignmentDao;
 import com.blackboard.api.dao.util.MySQLDao;
 
 import java.sql.Date;
@@ -15,7 +16,7 @@ import static com.blackboard.api.dao.util.MySQLDao.printSQLException;
 
 /**
  * The MySQL implementation of Create, Retrieve, Update and Delete functions on the AssignmentDao Objects.
- * <p/>
+ * <p>
  * Created by ChristopherLicata on 11/24/15.
  */
 
@@ -43,7 +44,7 @@ public class AssignmentMySQLDao
     {
         String query = new StringBuilder()
                 .append("INSERT INTO assignments(course_id, assigned_date, due_date, ")
-                .append("assignment_filename, assignment_name,totalPoints, instructions")
+                .append("assignment_filename, assignment_name,total_points, instructions) VALUES ")
                 .append("(?, ?, ?, ?, ?, ?, ?)").toString();
 
         int courseId = assignment.getCourse().getCourseId();
@@ -51,18 +52,21 @@ public class AssignmentMySQLDao
         String assignmentFileName = assignment.getAssignmentFileName();
         String instructions = assignment.getInstructions();
         int totalPoints = assignment.getTotalPoints();
-        Date dateAssigned = (Date) assignment.getDateAssigned();
-        Date dueDate = (Date) assignment.getDueDate();
+        Date dateAssigned = new Date(assignment.getDateAssigned().getTime());
+        Date dueDate = new Date(assignment.getDueDate().getTime());
         Optional<ResultSet> assignmentId = dao
                 .update(query, courseId, dateAssigned, dueDate, assignmentFileName, assignmentName,
                         totalPoints, instructions);
 
         try
         {
-            // Assign the row id to the assignmentId for easy access
-            assignment.setAssignmentId(assignmentId.get().getInt(1));
-            // Closing result set for good form.
-            assignmentId.get().close();
+            if (assignmentId.get().next())
+            {
+                // Assign the row id to the assignmentId for easy access
+                assignment.setAssignmentId(assignmentId.get().getInt(1));
+                // Closing result set for good form.
+                assignmentId.get().close();
+            }
 
         }
         catch (SQLException e)
@@ -95,8 +99,8 @@ public class AssignmentMySQLDao
                     String assignmentName = result.getString("assignment_name");
                     String instructions = result.getString("instructions");
                     int totalPoints = result.getInt("total_points");
-                    Date dateAssigned = result.getDate("assigned_date");
-                    Date dueDate = result.getDate("due_date");
+                    java.util.Date dateAssigned = result.getDate("assigned_date");
+                    java.util.Date dueDate = result.getDate("due_date");
                     String assignmentFileName = result.getString("assignment_filename");
 
                     // Find Course Object
@@ -153,20 +157,21 @@ public class AssignmentMySQLDao
     public Assignment updateAssignment(Assignment assignment)
     {
         String query = new StringBuilder("UPDATE assignments SET course_id = ?, assigned_date = ?, due_date = ?")
-                .append(", assignment_filename = ?, total_points = ?, instructions = ?, assignment_name = ?, ")
-                .append("WHERE assignment_id = ?")
+                .append(", assignment_filename = ?, total_points = ?, instructions = ?, weight = ?, ")
+                .append("assignment_name = ? WHERE assignment_id = ?")
                 .toString();
         int assignmentId = assignment.getAssignmentId();
         String assignmentName = assignment.getAssignmentName();
         String assignmentFileName = assignment.getAssignmentFileName();
         String instructions = assignment.getInstructions();
-        Date dueDate = (Date) assignment.getDueDate();
-        Date dateAssigned = (Date) assignment.getDateAssigned();
+        double weight = assignment.getWeight();
+        Date dueDate = new java.sql.Date(assignment.getDueDate().getTime());
+        Date dateAssigned = new java.sql.Date(assignment.getDateAssigned().getTime());
         int totalPoints = assignment.getTotalPoints();
         int courseId = assignment.getCourse().getCourseId();
 
         dao.update(query, courseId, dateAssigned, dueDate, assignmentFileName, totalPoints, instructions,
-                   assignmentName, assignmentId);
+                   weight, assignmentName, assignmentId);
 
         return assignment;
 
@@ -194,8 +199,8 @@ public class AssignmentMySQLDao
                 int assignmentId = result.getInt("assignment_id");
                 int resCourseId = result.getInt("course_id");
                 int totalPoints = result.getInt("total_points");
-                Date dueDate = result.getDate("due_date");
-                Date dateAssigned = result.getDate("date_assigned");
+                java.util.Date dueDate = result.getDate("due_date");
+                java.util.Date dateAssigned = result.getDate("assigned_date");
                 String instructions = result.getString("instructions");
                 String assignmentName = result.getString("assignment_name");
                 String assignmentFileName = result.getString("assignment_filename");

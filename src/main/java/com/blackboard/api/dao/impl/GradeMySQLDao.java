@@ -2,6 +2,7 @@ package com.blackboard.api.dao.impl;
 
 import com.blackboard.api.core.model.Assignment;
 import com.blackboard.api.core.model.Grade;
+import com.blackboard.api.dao.impl.interfaces.GradeDao;
 import com.blackboard.api.dao.util.MySQLDao;
 
 import java.sql.ResultSet;
@@ -35,8 +36,8 @@ public class GradeMySQLDao
     public Grade createGrade(Grade grade)
     {
         String query = new StringBuilder()
-                .append("INSERT INTO assignments(assignment_id, submission_id, student_email, ")
-                .append("score, submitted_time")
+                .append("INSERT INTO grades (assignment_id, submission_id, student_email, ")
+                .append("score, submitted_time) VALUES")
                 .append("(?, ?, ?, ?, ?)").toString();
 
         int assignmentId = grade.getAssignment().getAssignmentId();
@@ -45,15 +46,17 @@ public class GradeMySQLDao
         int score = grade.getScore();
         Timestamp createdTime = dao.generateTimeStamp();
         Optional<ResultSet> gradeId = dao
-                .update(query, assignmentId, submissionId, studentEmail, createdTime, score);
+                .update(query, assignmentId, submissionId, studentEmail, score, createdTime);
 
         try
         {
-            // Assign the row id to the assignmentId for easy access
-            grade.setGradeId(gradeId.get().getInt(1));
-            // Closing result set for good form.
-            gradeId.get().close();
-
+            if (gradeId.get().next())
+            {
+                // Assign the row id to the assignmentId for easy access
+                grade.setGradeId(gradeId.get().getInt(1));
+                // Closing result set for good form.
+                gradeId.get().close();
+            }
         }
         catch (SQLException e)
         {
@@ -76,7 +79,7 @@ public class GradeMySQLDao
     @Override
     public Optional<Grade> findGradeById(int gradeId)
     {
-        String q = "SELECT * FROM assignments WHERE assignment_id = ? LIMIT 1";
+        String q = "SELECT * FROM grades WHERE grade_id = ? LIMIT 1";
 
         return dao.query(q, gradeId).flatMap(result -> {
             try

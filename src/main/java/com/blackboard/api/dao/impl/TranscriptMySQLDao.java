@@ -3,6 +3,7 @@ package com.blackboard.api.dao.impl;
 import com.blackboard.api.core.Season;
 import com.blackboard.api.core.model.Course;
 import com.blackboard.api.core.model.Transcript;
+import com.blackboard.api.dao.impl.interfaces.TranscriptDao;
 import com.blackboard.api.dao.util.MySQLDao;
 
 import java.sql.ResultSet;
@@ -70,7 +71,7 @@ public class TranscriptMySQLDao
     @Override
     public Optional<Transcript> findTranscriptByTranscriptId(int transcriptId)
     {
-        String q = "SELECT * FROM transcripts WHERE transcriptId = ? LIMIT 1";
+        String q = "SELECT * FROM transcripts WHERE transcript_id = ? LIMIT 1";
         return dao.query(q, transcriptId).flatMap(r -> {
             try
             {
@@ -104,7 +105,7 @@ public class TranscriptMySQLDao
     @Override
     public Transcript updateTranscript(Transcript transcript)
     {
-        String query = new StringBuilder("UPDATE transcript SET student_email = ?, course_id = ?, semester = ?")
+        String query = new StringBuilder("UPDATE transcripts SET student_email = ?, course_id = ?, semester = ?")
                 .append("school_id = ?, grade = ?, year = ? WHERE transcript_id = ?").toString();
 
         int transcriptId = transcript.getTranscriptId();
@@ -132,8 +133,8 @@ public class TranscriptMySQLDao
     public Transcript createTranscript(Transcript transcript)
     {
         String query = new StringBuilder()
-                .append("INSERT INTO transcripts(student_email, course_id, school_id, semester, year")
-                .append("(?, ?, ?, ?, ?)").toString();
+                .append("INSERT INTO transcripts(student_email, course_id, school_id, semester, year)")
+                .append(" VALUES (?, ?, ?, ?, ?)").toString();
         String studentEmail = transcript.getStudentEmail();
         int courseId = transcript.getCourse().getCourseId();
         int schoolId = transcript.getCourse().getSchool().getSchoolId();
@@ -145,7 +146,11 @@ public class TranscriptMySQLDao
 
         try
         {
-            transcript.setTranscriptId(transcriptId.get().getInt(1));
+            if (transcriptId.get().next())
+            {
+                transcript.setTranscriptId(transcriptId.get().getInt(1));
+                transcriptId.get().close();
+            }
         }
         catch (SQLException e)
         {
@@ -160,7 +165,7 @@ public class TranscriptMySQLDao
     public Optional<Transcript> deleteTranscript(int transcriptId)
     {
         return findTranscriptByTranscriptId(transcriptId).map(transcript -> {
-            dao.update("DELETE FROM transcripts WHERE transcriptId = ?", transcript.getTranscriptId());
+            dao.update("DELETE FROM transcripts WHERE transcript_id = ?", transcript.getTranscriptId());
             return transcript;
         });
     }

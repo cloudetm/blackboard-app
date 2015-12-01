@@ -1,6 +1,7 @@
 package com.blackboard.api.dao.impl;
 
 import com.blackboard.api.core.model.School;
+import com.blackboard.api.dao.impl.interfaces.SchoolDao;
 import com.blackboard.api.dao.util.MySQLDao;
 
 import java.sql.ResultSet;
@@ -44,9 +45,9 @@ public class SchoolMySQLDao
             ArrayList<School> schools = new ArrayList<>();
             while (result.next())
             {
-                int school_id = result.getInt("school_id");
+                int schoolId = result.getInt("school_id");
                 String name = result.getString("name");
-                schools.add(new School(school_id, name));
+                schools.add(new School(schoolId, name));
             }
             return schools;
         }

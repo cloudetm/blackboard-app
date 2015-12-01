@@ -2,12 +2,15 @@ package com.blackboard.api.core.model;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.security.Principal;
+
 /**
  * This is the User Model Class that maps to the users table in the database.
  * <p/>
  * Created by ChristopherLicata on 11/14/15.
  */
 public class User
+        implements Principal
 {
     private int userId;
 
@@ -143,6 +146,20 @@ public class User
     static public boolean validatePassword(String plaintext, User user)
     {
         return BCrypt.checkpw(plaintext, user.getPassword());
+    }
+
+
+    public String getRole()
+    {
+
+        return email.equals("cmlicata@gwmail.gwu.edu") ? "ADMIN" : "USER";
+    }
+
+
+    @Override
+    public String getName()
+    {
+        return email;
     }
 
 }

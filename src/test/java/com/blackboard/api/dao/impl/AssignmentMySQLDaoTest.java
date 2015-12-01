@@ -69,7 +69,7 @@ public class AssignmentMySQLDaoTest {
             throws SQLException, ParseException {
         String query = new StringBuilder()
                 .append("INSERT INTO assignments(course_id, assigned_date, due_date, ")
-                .append("assignment_filename, assignment_name,totalPoints, instructions")
+                .append("assignment_filename, assignment_name,total_points, instructions) VALUES ")
                 .append("(?, ?, ?, ?, ?, ?, ?)").toString();
 
         when(mockCourse.getCourseId()).thenReturn(1);

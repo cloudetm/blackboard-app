@@ -3,6 +3,7 @@ package com.blackboard.api.dao.impl;
 import com.blackboard.api.core.model.Assignment;
 import com.blackboard.api.core.model.Grade;
 import com.blackboard.api.core.model.Submission;
+import com.blackboard.api.dao.impl.interfaces.SubmissionDao;
 import com.blackboard.api.dao.util.MySQLDao;
 
 import java.sql.ResultSet;
@@ -44,7 +45,7 @@ public class SubmissionMySQLDao
     {
         String query = new StringBuilder()
                 .append("INSERT INTO submissions(assignment_id, student_email, date_time_submitted, ")
-                .append("submission_filename")
+                .append("submission_filename) VALUES")
                 .append("(?, ?, ?, ?)").toString();
 
         int assignmentId = submission.getAssignment().getAssignmentId();
@@ -56,11 +57,14 @@ public class SubmissionMySQLDao
 
         try
         {
-            // Assign the row id to the assignmentId for easy access
-            submission.setSubmissionId(submissionId.get().getInt(1));
-            submission.setCurrentTimeStamp(currentTimestamp);
-            // Closing result set for good form.
-            submissionId.get().close();
+            if (submissionId.get().next())
+            {
+                // Assign the row id to the assignmentId for easy access
+                submission.setSubmissionId(submissionId.get().getInt(1));
+                submission.setCurrentTimeStamp(currentTimestamp);
+                // Closing result set for good form.
+                submissionId.get().close();
+            }
 
         }
         catch (SQLException e)
@@ -231,7 +235,7 @@ public class SubmissionMySQLDao
         String submissionFilename = submission.getSubmissionFileName();
         int submissionId = submission.getSubmissionId();
 
-        dao.query(query, assignmentId, gradeId, studentEmail, timestamp, submissionFilename, submissionId);
+        dao.update(query, assignmentId, gradeId, studentEmail, timestamp, submissionFilename, submissionId);
 
         return submission;
 

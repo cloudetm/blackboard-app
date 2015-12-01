@@ -108,7 +108,15 @@ public class Assignment
             String assignmentFileName,
             String instructions, double weight, int totalPoints, Date dateAssigned, Date dueDate)
     {
-
+        this.assignmentId = assignmentId;
+        this.course = course;
+        this.assignmentName = assignmentName;
+        this.assignmentFileName = assignmentFileName;
+        this.instructions = instructions;
+        this.weight = weight;
+        this.totalPoints = totalPoints;
+        this.dateAssigned = dateAssigned;
+        this.dueDate = dueDate;
     }
 
 

@@ -4,6 +4,7 @@ import com.blackboard.api.core.Subject;
 import com.blackboard.api.core.model.Course;
 import com.blackboard.api.core.model.Instructor;
 import com.blackboard.api.core.model.School;
+import com.blackboard.api.dao.impl.interfaces.CourseDao;
 import com.blackboard.api.dao.util.MySQLDao;
 
 import java.sql.ResultSet;

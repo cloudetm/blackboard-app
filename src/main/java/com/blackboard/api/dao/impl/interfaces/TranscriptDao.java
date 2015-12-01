@@ -1,4 +1,4 @@
-package com.blackboard.api.dao.impl;
+package com.blackboard.api.dao.impl.interfaces;
 
 import com.blackboard.api.core.model.Transcript;
 

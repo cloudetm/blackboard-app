@@ -4,8 +4,11 @@ import com.blackboard.api.core.Season;
 import com.blackboard.api.core.Subject;
 import com.blackboard.api.core.model.*;
 import com.blackboard.api.dao.impl.*;
+import com.blackboard.api.dao.impl.interfaces.*;
 import com.blackboard.api.dao.util.MySQLDao;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -172,7 +175,7 @@ public class BlackboardApi
 
         return courseDao.findCoursesByInstructor(instructorEmail);
     }
-
+    //TODO implement search by course-prefix-subject and course number and school
 
     public List<Course> getAllCoursesOffered(School school)
     {
@@ -284,9 +287,9 @@ public class BlackboardApi
      */
 
 
-    public Grade createGrade(int score, Assignment assignment, int submissionId, String studentEmail)
+    public Grade createGrade(int score, Assignment assignment, Submission submission, String studentEmail)
     {
-        Grade grade = new Grade(score, assignment, submissionId, studentEmail);
+        Grade grade = new Grade(score, assignment, submission.getSubmissionId(), studentEmail);
         return gradeDao.createGrade(grade);
     }
 
@@ -311,6 +314,11 @@ public class BlackboardApi
 
     public List<Grade> getAllGradesForAssignment(Assignment assignment)
     {
+        if (!assignmentDao.findAssignmentById(assignment.getAssignmentId()).isPresent())
+        {
+            throw new IllegalArgumentException("There is no assignment with the id " + assignment
+                    .getAssignmentId() + "in the System");
+        }
         return gradeDao.findGradesByAssignment(assignment);
     }
 
@@ -319,6 +327,16 @@ public class BlackboardApi
             int gradeId, int score, Assignment assignment, int submissionId, String
             studentEmail)
     {
+        if (!assignmentDao.findAssignmentById(assignment.getAssignmentId()).isPresent())
+        {
+            throw new IllegalArgumentException("There is no assignment with the id " + assignment
+                    .getAssignmentId() + "in the System");
+        }
+        else if (!submissionDao.findStudentSubmission(studentEmail, assignment.getAssignmentId()).isPresent())
+        {
+            throw new IllegalArgumentException(
+                    "There is no submission with the id " + submissionId + "in the System");
+        }
         Grade grade = new Grade(gradeId, score, assignment, submissionId, studentEmail);
         return gradeDao.updateGrade(grade);
     }
@@ -332,6 +350,16 @@ public class BlackboardApi
             studentEmail, String
                     submissionFileName)
     {
+        if (!assignmentDao.findAssignmentById(assignment.getAssignmentId()).isPresent())
+        {
+            throw new IllegalArgumentException("There is no assignment with the id " + assignment
+                    .getAssignmentId() + "in the System");
+        }
+        else if (!gradeDao.findGradeById(grade.getGradeId()).isPresent())
+        {
+            throw new IllegalArgumentException("There is no grade with the id " +
+                                                       grade.getGradeId() + "in the System");
+        }
 
         Submission submission = new Submission(submissionId, grade, assignment, studentEmail,
                                                submissionFileName, dao.generateTimeStamp());
@@ -340,10 +368,21 @@ public class BlackboardApi
     }
 
 
+    /**
+     * In the current design, the choice was made to exclude update functionality from submissions, due to the
+     * fact that it is easier to keep
+     */
     public Submission createSubmission(Assignment assignment, String studentEmail, String submissionFileName)
     {
+        if (!assignmentDao.findAssignmentById(assignment.getAssignmentId()).isPresent())
+        {
+            throw new IllegalArgumentException("There is no assignment with the id " + assignment
+                    .getAssignmentId() + "in the System");
+        }
+
         Submission submission = new Submission(assignment, studentEmail, submissionFileName, dao
                 .generateTimeStamp());
+
         return submissionDao.createSubmission(submission);
     }
 
@@ -362,6 +401,11 @@ public class BlackboardApi
 
     public Optional<Submission> getStudentSubmission(String studentEmail, int assignmentId)
     {
+        if (!assignmentDao.findAssignmentById(assignmentId).isPresent())
+        {
+            throw new IllegalArgumentException(
+                    "There is no assignment with the id " + assignmentId + "in the System");
+        }
         return submissionDao.findStudentSubmission(studentEmail, assignmentId);
     }
 
@@ -381,7 +425,7 @@ public class BlackboardApi
      */
 
 
-    public List<Transcript> getStudentTranscript(String studentEmail)
+    public List<Transcript> getStudentTranscripts(String studentEmail)
     {
         return transcriptDao.findTranscriptsByStudentEmail(studentEmail);
     }
@@ -395,7 +439,6 @@ public class BlackboardApi
 
     public Transcript createTranscript(String studentEmail, Season semester, int year, Course course)
     {
-
         Transcript transcript = new Transcript(studentEmail, semester, year, course);
 
         return transcriptDao.createTranscript(transcript);
@@ -424,12 +467,27 @@ public class BlackboardApi
 
 
     public static void main(String[] args)
+            throws ParseException
     {
         MySQLDao dao = new MySQLDao();
         BlackboardApi api = new BlackboardApi(dao);
         dao.setDb("jdbc:mysql://blackboard-db-prod01.cd0fd80v826l.us-west-2.rds.amazonaws" +
                           ".com:3306/blackboard_prod01?user=cmlicata&password=timmykim123&useUnicode=true&characterEncoding=UTF-8");
+        School school = new School(1, "Moses University");
+        Instructor instructor = Instructor
+                .createInstructor("Ruth", "Sanchez", "rms@att.com", "bucles7363", 1);
+
+        Course testingCourse1 = new Course(1, school, instructor, "Advanced Software Development", Subject.CSCI,
+                                           6001, 4,
+                                           "SD601.docx", 40);
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+      /*  Optional<Assignment> assignment = api.getAssignmentById(2);
+        Optional<Submission> submission = api.getStudentSubmission("ahayesfelts@gmail.com", assignment
+                .get().getAssignmentId());*/
+
+        Optional<Transcript> transcript = api.deleteTranscript(1);
 
     }
-
 }

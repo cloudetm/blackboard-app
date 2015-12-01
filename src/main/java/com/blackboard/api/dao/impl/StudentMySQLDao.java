@@ -1,6 +1,7 @@
 package com.blackboard.api.dao.impl;
 
 import com.blackboard.api.core.model.Student;
+import com.blackboard.api.dao.impl.interfaces.StudentDao;
 import com.blackboard.api.dao.util.MySQLDao;
 
 import java.sql.ResultSet;

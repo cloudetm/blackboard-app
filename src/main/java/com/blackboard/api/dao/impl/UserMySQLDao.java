@@ -2,6 +2,7 @@ package com.blackboard.api.dao.impl;
 
 import com.blackboard.api.core.model.Student;
 import com.blackboard.api.core.model.User;
+import com.blackboard.api.dao.impl.interfaces.UserDao;
 import com.blackboard.api.dao.util.MySQLDao;
 
 import java.sql.SQLException;
