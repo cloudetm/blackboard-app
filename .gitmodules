@@ -1,0 +1,3 @@
+[submodule "blackboard-api"]
+	path = blackboard-api
+	url = git@github.com:cmlicata/blackboard-api.git
