@@ -1,8 +1,8 @@
 package com.blackboard.api.core.impl;
 
+import com.blackboard.api.core.model.Assignment;
 import com.blackboard.api.core.model.Course;
 import com.blackboard.api.core.model.Grade;
-import com.blackboard.api.core.model.Assignment;
 import com.blackboard.api.core.model.Transcript;
 import org.junit.Test;
 

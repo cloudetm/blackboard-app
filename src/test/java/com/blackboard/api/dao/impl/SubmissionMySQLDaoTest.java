@@ -89,21 +89,21 @@ public class SubmissionMySQLDaoTest
     public void testCreateSubmission()
             throws Exception
     {
-        String submissionSQLQuery = new StringBuilder()
+        String query = new StringBuilder()
                 .append("INSERT INTO submissions(assignment_id, student_email, date_time_submitted, ")
-                .append("submission_filename")
+                .append("submission_filename) VALUES")
                 .append("(?, ?, ?, ?)").toString();
         Optional<ResultSet> submissionResultSet = new ResultSetMocker().mockSubmissionResultSet(
                 assignmentId, studentEmail, timeStamp, submissionFileName
         );
 
-        when(dao.update(submissionSQLQuery, assignmentId, studentEmail, timeStamp, submissionFileName))
+        when(dao.update(query, assignmentId, studentEmail, timeStamp, submissionFileName))
                 .thenReturn(submissionResultSet);
 
         Submission submission = submissionDao.createSubmission(mockedSubmission);
 
         verify(dao, times(1))
-                .update(submissionSQLQuery, assignmentId, studentEmail, timeStamp, submissionFileName);
+                .update(query, assignmentId, studentEmail, timeStamp, submissionFileName);
         verify(mockedSubmission, times(1)).setSubmissionId(anyInt());
         verify(mockedSubmission, times(1)).setCurrentTimeStamp(timeStamp);
         assertTrue(outContent.toString().length() == 0);

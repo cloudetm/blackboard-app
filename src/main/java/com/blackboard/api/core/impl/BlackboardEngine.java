@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * This utility class implements all of the core logic that will be utilized throughout the application, more
  * specifically, the calculations that will have to be made frequently.
- * <p/>
+ * <p>
  * Created by ChristopherLicata on 11/14/15.
  *
  * @author Phil Lopreiato <plopreiato@gwmail.gwu.edu>
@@ -53,7 +53,7 @@ public class BlackboardEngine
     /**
      * Compute a student's GPA from a list of their completed courses Uses the transcript's associated {@link
      * Course} and {@link Grade} for credit weight / result
-     * <p/>
+     * <p>
      * Returns a percent of total points earned (100 * number of credits per course)
      *
      * @param transcripts Transcripts to average

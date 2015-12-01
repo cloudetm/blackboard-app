@@ -14,7 +14,7 @@ import static com.blackboard.api.dao.util.MySQLDao.printSQLException;
 
 /**
  * The MySQL implementation of Create and Retrieve functions on the InstructorDao Objects.
- * <p/>
+ * <p>
  * Created by ChristopherLicata on 11/22/15.
  */
 public class InstructorMySQLDao

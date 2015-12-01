@@ -15,10 +15,9 @@ import java.util.Optional;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-
 /**
- * * Test class for the MySQL-based {@link Schoo} Operations
- *
+ * * Test class for the MySQL-based {@link School} Operations
+ * <p>
  * Created by ChristopherLicata on 11/23/15.
  */
 public class SchoolMySQLDaoTest

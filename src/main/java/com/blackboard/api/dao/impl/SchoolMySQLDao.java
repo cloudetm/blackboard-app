@@ -14,7 +14,7 @@ import static com.blackboard.api.dao.util.MySQLDao.printSQLException;
 
 /**
  * Class that provides the MySQL implementation of retrieval of schools from the DB.
- * <p/>
+ * <p>
  * Created by ChristopherLicata on 11/23/15.
  */
 public class SchoolMySQLDao

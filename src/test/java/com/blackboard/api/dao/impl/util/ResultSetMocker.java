@@ -3,7 +3,6 @@ package com.blackboard.api.dao.impl.util;
 import com.blackboard.api.core.Subject;
 import com.blackboard.api.core.model.Grade;
 
-import java.security.cert.PKIXRevocationChecker;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +16,7 @@ import static org.mockito.Mockito.when;
 
 /**
  * Utility class used to generate result sets for the different DAO model objects.
- * <p/>
+ * <p>
  * Created by ChristopherLicata on 11/22/15.
  */
 public class ResultSetMocker
@@ -26,7 +25,7 @@ public class ResultSetMocker
     public Optional<ResultSet> mockStudentResultSet(
             int userId,
             String firstName, String lastName, String email, String
-            password, int schoolId, double gpa)
+                    password, int schoolId, double gpa)
             throws SQLException
     {
         ResultSet resultSetMock = mock(ResultSet.class);
@@ -63,7 +62,7 @@ public class ResultSetMocker
     public Optional<ResultSet> mockInstructorResultSet(
             int userId,
             String firstName, String lastName, String email, String
-            password, int schoolId)
+                    password, int schoolId)
             throws SQLException
     {
         ResultSet resultSetMock = mock(ResultSet.class);
@@ -219,10 +218,13 @@ public class ResultSetMocker
         return Optional.of(resultSetMock);
     }
 
+
     public Optional<ResultSet> mockSubmissionResultSet(
             int assignmentId, String studentEmail,
             Timestamp currentTimeStamp, String submissionFileName
-    ) throws SQLException {
+    )
+            throws SQLException
+    {
         ResultSet resultSetMock = mock(ResultSet.class);
         when(resultSetMock.next()).thenReturn(true).thenReturn(true).thenReturn(false);
         when(resultSetMock.getTimestamp("date_time_submitted")).thenReturn(currentTimeStamp);
@@ -233,18 +235,18 @@ public class ResultSetMocker
     }
 
 
-
     public Optional<ResultSet> mockSubmissionResultSet(
             int assignmentId, String studentEmail,
             Timestamp currentTimeStamp, String submissionFileName,
             int submissionId, Grade grade
-    ) throws SQLException {
+    )
+            throws SQLException
+    {
         Optional<ResultSet> resultSetMock = mockSubmissionResultSet(assignmentId, studentEmail, currentTimeStamp, submissionFileName);
         when(resultSetMock.get().getInt(1)).thenReturn(submissionId);
         when(resultSetMock.get().getInt("submission_id")).thenReturn(submissionId);
         when(resultSetMock.get().getInt("grade_id")).thenReturn(grade.getGradeId());
         return resultSetMock;
     }
-
 
 }

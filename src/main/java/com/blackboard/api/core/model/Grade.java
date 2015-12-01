@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 /**
  * This is the Grade Model Class that maps to the grades table in the database.
- * <p/>
+ * <p>
  * Created by ChristopherLicata on 11/14/15.
  */
 public class Grade

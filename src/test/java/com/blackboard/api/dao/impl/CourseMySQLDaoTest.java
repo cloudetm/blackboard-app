@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 
 /**
  * Test class for the MySQL-based {@link CourseMySQLDao} Operations
- * <p/>
+ * <p>
  * Created by ChristopherLicata on 11/24/15.
  */
 public class CourseMySQLDaoTest
@@ -285,8 +285,8 @@ public class CourseMySQLDaoTest
     {
         String query = new StringBuilder()
                 .append("INSERT INTO courses(subject, course_number, school_id, instructor_email, course_name,")
-                .append(", syllabus_filename, max_capacity, credits")
-                .append("(?, ?, ?, ?, ?, ?)").toString();
+                .append(" syllabus_filename, max_capacity, credits) VALUES")
+                .append("(?, ?, ?, ?, ?, ?, ?, ?)").toString();
 
         // School Argument Mock Call Handler
         School mockSchool = mock(School.class);
@@ -311,7 +311,7 @@ public class CourseMySQLDaoTest
 
         when(dao.update(query, "MATH", 3334, 14, "googler@gmail.com", "AWS Studies",
                         "aws_rtfm_guide.pdf", 49, 3)).thenReturn(courseId);
-
+        when(courseId.get().next()).thenReturn(true);
         courseDao.createCourse(mockSchool, mockCourse);
 
         verify(dao).update(query, "MATH", 3334, 14, "googler@gmail.com", "AWS Studies",

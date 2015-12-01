@@ -26,7 +26,8 @@ import static org.mockito.Mockito.*;
  * Created by ChristopherLicata on 11/25/15.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class AssignmentMySQLDaoTest {
+public class AssignmentMySQLDaoTest
+{
     @Mock
     private MySQLDao dao;
 
@@ -41,14 +42,18 @@ public class AssignmentMySQLDaoTest {
 
     private java.sql.Date dueDate;
 
-    private Date createSQLDate(String dateString) throws ParseException {
+
+    private Date createSQLDate(String dateString)
+            throws ParseException
+    {
         return new Date(new SimpleDateFormat("yyy-MM-dd").parse(dateString).getTime());
     }
 
 
     @Before
     public void setUp()
-            throws ParseException {
+            throws ParseException
+    {
         resultSet = new ResultSetMocker();
         assignmentDao = new AssignmentMySQLDao(dao);
 
@@ -66,7 +71,8 @@ public class AssignmentMySQLDaoTest {
      */
     @Test
     public void testCreateAssignment()
-            throws SQLException, ParseException {
+            throws SQLException, ParseException
+    {
         String query = new StringBuilder()
                 .append("INSERT INTO assignments(course_id, assigned_date, due_date, ")
                 .append("assignment_filename, assignment_name,total_points, instructions) VALUES ")
@@ -86,15 +92,18 @@ public class AssignmentMySQLDaoTest {
         when(assignmentId.get().getInt(1)).thenReturn(23);
 
         when(dao.update(query, 1, assignedDate, dueDate, "zombies.jar", "Zombies Assignment", 100,
-                "You are all going to fail this test")).thenReturn(assignmentId);
+                        "You are all going to fail this test")).thenReturn(assignmentId);
 
         assignmentDao.createAssignment(assignment);
         verify(dao).update(query, 1, assignedDate, dueDate, "zombies.jar", "Zombies Assignment", 100,
-                "You are all going to fail this test");
+                           "You are all going to fail this test");
     }
 
+
     @Test
-    public void testFindAssignmentByIDNoInternalDBCalls() throws SQLException {
+    public void testFindAssignmentByIDNoInternalDBCalls()
+            throws SQLException
+    {
         // Note that `findCourseById` is tested elsewhere
         // Note that `findSchoolByID` is tested elsewhere
         // Note that `findInstructorByEmail` is tested elsewhere
@@ -120,7 +129,6 @@ public class AssignmentMySQLDaoTest {
         String assignmentFileName = "tassignment.pdf";
         int totalPoints = 100;
 
-
         // Mocking course value, that is searched for is tested method explicitly
         Course mockCourse = mock(Course.class);
         when(mockCourse.getCourseId()).thenReturn(courseID);
@@ -131,12 +139,12 @@ public class AssignmentMySQLDaoTest {
 
         String assignmentsQuery = "SELECT * FROM assignments WHERE assignment_id = ? LIMIT 1";
         Optional<ResultSet> assignmentResult = resultSet.mockAssignmentResultSet(assignmentID, courseID,
-                instructorsString,
-                assignmentName,
-                assignmentFileName,
-                assignedDate,
-                dueDate,
-                totalPoints);
+                                                                                 instructorsString,
+                                                                                 assignmentName,
+                                                                                 assignmentFileName,
+                                                                                 assignedDate,
+                                                                                 dueDate,
+                                                                                 totalPoints);
         when(dao.query(assignmentsQuery, assignmentID)).thenReturn(assignmentResult);
 
         // now the logic of course lookup can be mocked by substituting real CourseMySQLDao with our mocked one
@@ -148,36 +156,45 @@ public class AssignmentMySQLDaoTest {
         Optional<Assignment> assignment = spiedAssignmentDao.findAssignmentById(assignmentID);
 
         Assert.that(assignment.isPresent(), "Assignment returned isPresent()");
-        Assert.that(assignment.get().getAssignmentId() == assignmentID, "Assignment id did not match expected value");
+        Assert.that(assignment.get().getAssignmentId() ==
+                            assignmentID, "Assignment id did not match expected value");
         Assert.that(
-                assignment.get().getCourse().getCourseId() == courseID, "Course id did not match expected value");
-        Assert.that(assignment.get().getDueDate().equals(dueDate),
+                assignment.get().getCourse().getCourseId() ==
+                        courseID, "Course id did not match expected value");
+        Assert.that(
+                assignment.get().getDueDate().equals(dueDate),
                 "Assignment dueDate " + assignment.get().getDueDate().toString() +
                         " did not match expected value " + dueDate.toString());
 
-        Assert.that(assignment.get().getDateAssigned().equals(assignedDate),
+        Assert.that(
+                assignment.get().getDateAssigned().equals(assignedDate),
                 "Assignment assignedDate" + assignment.get().getDateAssigned().toString() +
                         "did not match expected value " + assignedDate.toString());
 
-        Assert.that(assignment.get().getInstructions().equals(instructorsString),
+        Assert.that(
+                assignment.get().getInstructions().equals(instructorsString),
                 "Assignment instructions did not match expected value " +
                         instructorsString
         );
 
-        Assert.that(assignment.get().getAssignmentName().equals(assignmentName),
+        Assert.that(
+                assignment.get().getAssignmentName().equals(assignmentName),
                 "Assignment name did not match expected value " +
                         assignmentName
         );
 
-        Assert.that(assignment.get().getAssignmentFileName().equals(assignmentFileName),
+        Assert.that(
+                assignment.get().getAssignmentFileName().equals(assignmentFileName),
                 "Assignment filename did not match expected value " +
                         assignmentFileName
         );
     }
 
+
     @Test
     public void testFindAssignmentById()
-            throws SQLException, ParseException {
+            throws SQLException, ParseException
+    {
         String assignmentsQuery = "SELECT * FROM assignments WHERE assignment_id = ? LIMIT 1";
 
         // School Argument Mock Call Handler
@@ -208,19 +225,19 @@ public class AssignmentMySQLDaoTest {
         String coursesQuery = "SELECT * FROM courses WHERE course_id = ? LIMIT 1";
 
         Optional<ResultSet> courseResult = resultSet.mockCourseResultSet(123, Subject.ENGL, 3456, 1,
-                "jordip@gmu.edu",
-                "Foundations of Literature",
-                "FoLsyllabus.pdf", 69, 3);
+                                                                         "jordip@gmu.edu",
+                                                                         "Foundations of Literature",
+                                                                         "FoLsyllabus.pdf", 69, 3);
         when(courseResult.get().next()).thenReturn(true).thenReturn(false);
         when(dao.query(coursesQuery, 123)).thenReturn(courseResult);
 
         Optional<ResultSet> assignmentResult = resultSet.mockAssignmentResultSet(13, 123,
-                "This is going to be good",
-                "Tough Assignment",
-                "tassignment.pdf",
-                assignedDate,
-                dueDate,
-                100);
+                                                                                 "This is going to be good",
+                                                                                 "Tough Assignment",
+                                                                                 "tassignment.pdf",
+                                                                                 assignedDate,
+                                                                                 dueDate,
+                                                                                 100);
 
         when(dao.query(assignmentsQuery, 13)).thenReturn(assignmentResult);
 
@@ -258,7 +275,8 @@ public class AssignmentMySQLDaoTest {
 
     @Test
     public void testDeleteAssignmentById()
-            throws SQLException, ParseException {
+            throws SQLException, ParseException
+    {
         String assignmentsQuery = "SELECT * FROM assignments WHERE assignment_id = ? LIMIT 1";
         String assignmentsDeleteQuery = "DELETE FROM assignments WHERE assignment_id = ?";
 
@@ -289,19 +307,19 @@ public class AssignmentMySQLDaoTest {
         String coursesQuery = "SELECT * FROM courses WHERE course_id = ? LIMIT 1";
 
         Optional<ResultSet> courseResult = resultSet.mockCourseResultSet(123, Subject.ENGL, 3456, 1,
-                "jordip@gmu.edu",
-                "Foundations of Literature",
-                "FoLsyllabus.pdf", 69, 3);
+                                                                         "jordip@gmu.edu",
+                                                                         "Foundations of Literature",
+                                                                         "FoLsyllabus.pdf", 69, 3);
         when(courseResult.get().next()).thenReturn(true).thenReturn(false);
         when(dao.query(coursesQuery, 123)).thenReturn(courseResult);
 
         Optional<ResultSet> assignmentResult = resultSet.mockAssignmentResultSet(13, 123,
-                "This is going to be good",
-                "Tough Assignment",
-                "tassignment.pdf",
-                assignedDate,
-                dueDate,
-                100);
+                                                                                 "This is going to be good",
+                                                                                 "Tough Assignment",
+                                                                                 "tassignment.pdf",
+                                                                                 assignedDate,
+                                                                                 dueDate,
+                                                                                 100);
 
         when(dao.query(assignmentsQuery, 13)).thenReturn(assignmentResult);
 
@@ -314,27 +332,30 @@ public class AssignmentMySQLDaoTest {
 
     @Test
     public void testUpdateAssignment()
-            throws SQLException {
+            throws SQLException
+    {
         String query = new StringBuilder("UPDATE assignments SET course_id = ?, assigned_date = ?, due_date = ?")
-                .append(", assignment_filename = ?, total_points = ?, instructions = ?, assignment_name = ?, ")
-                .append("WHERE assignment_id = ?")
+                .append(", assignment_filename = ?, total_points = ?, instructions = ?, weight = ?, ")
+                .append("assignment_name = ? WHERE assignment_id = ?")
                 .toString();
 
         when(mockCourse.getCourseId()).thenReturn(1);
 
         Assignment assignment = new Assignment(12, mockCourse, "test1", "t1.doc", "Do this!", 100, assignedDate,
-                dueDate);
+                                               dueDate);
         assignmentDao.updateAssignment(assignment);
         verify(dao).update(query, assignment.getCourse().getCourseId(), assignment.getDateAssigned(),
-                assignment.getDueDate(), assignment.getAssignmentFileName(), assignment
-                        .getTotalPoints(), assignment.getInstructions(), assignment
-                        .getAssignmentName(), assignment.getAssignmentId());
+                           assignment.getDueDate(), assignment.getAssignmentFileName(), assignment
+                                   .getTotalPoints(), assignment.getInstructions(), assignment
+                                   .getWeight(), assignment
+                                   .getAssignmentName(), assignment.getAssignmentId());
     }
 
 
     @Test
     public void testFindAllAssignmentsByCourseId()
-            throws Exception {
+            throws Exception
+    {
 
     }
 }

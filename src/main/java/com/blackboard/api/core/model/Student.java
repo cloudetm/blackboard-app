@@ -2,9 +2,9 @@ package com.blackboard.api.core.model;
 
 /**
  * The Student Model Class.
- * <p/>
+ * <p>
  * To simplify DB structure this class extends the User class so that, using polymorphism, we can
- * <p/>
+ * <p>
  * Created by ChristopherLicata on 11/14/15.
  */
 public class Student

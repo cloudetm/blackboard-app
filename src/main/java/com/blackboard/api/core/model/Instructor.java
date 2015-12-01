@@ -3,7 +3,7 @@ package com.blackboard.api.core.model;
 /**
  * This is the Instructor Model Class that corresponds to the Instructor State of the Users table in the
  * database.
- * <p/>
+ * <p>
  * Created by ChristopherLicata on 11/14/15.
  */
 public class Instructor

@@ -4,7 +4,7 @@ import java.util.Date;
 
 /**
  * This is the Assignment Model Class that maps to the assignments table in the database.
- * <p/>
+ * <p>
  * Created by ChristopherLicata on 11/14/15.
  */
 public class Assignment

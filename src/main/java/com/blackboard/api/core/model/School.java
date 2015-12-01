@@ -2,7 +2,7 @@ package com.blackboard.api.core.model;
 
 /**
  * This is the School Model Class that maps to the schools table in the database.
- * <p/>
+ * <p>
  * Created by ChristopherLicata on 11/17/15.
  */
 public class School

@@ -1,6 +1,5 @@
 package com.blackboard.api.dao.util;
 
-import com.mysql.jdbc.Driver;
 import com.sun.media.jfxmedia.logging.Logger;
 
 import java.sql.*;
@@ -17,17 +16,49 @@ public class MySQLDao
 {
     private Connection connection = null;
 
-    private Driver driver;
-
     /**
      * This data is being retrieved via the external configuration .yml file
      */
     private String db;
 
+    private String driver;
+
+    private boolean isConnected = false;
+
+
+    public MySQLDao(String dbUrl, String driverClass)
+    {
+        final String CHECK_SQL_QUERY = "SELECT 1";
+        db = dbUrl;
+        driver = driverClass;
+        try
+        {
+            try
+            {
+                Class.forName(driver);
+            }
+            catch (ClassNotFoundException e)
+            {
+                System.out.println(e);
+            }
+
+            connection = DriverManager.getConnection(db);
+
+            connection.prepareStatement(CHECK_SQL_QUERY);
+
+            isConnected = true;
+        }
+        catch (SQLException e)
+        {
+            printSQLException(e);
+            exitApplication();
+        }
+    }
+
 
     /**
      * Constructs and prepares the SQL Statement with the given parameters.
-     * <p/>
+     * <p>
      * As compared to executing SQL statements directly, prepared statements offer two main advantages: <ol>
      * <li>The overhead of compiling and optimizing the statement is incurred only once, although the
      * statement is executed multiple times. Not all optimization can be performed at the time the prepared
@@ -116,30 +147,30 @@ public class MySQLDao
     /**
      * The SQLException instance contains the following information that can help determine the cause of the
      * error:
-     * <p/>
+     * <p>
      * A description of the error. Retrieve the String object that contains this description by calling the
      * method SQLException.getMessage.
-     * <p/>
+     * <p>
      * A SQLState code. These codes and their respective meanings have been standardized by ISO/ANSI and Open
      * Group (X/Open), although some codes have been reserved for database vendors to define for themselves.
      * This String object consists of five alphanumeric characters. Retrieve this code by calling the method
      * SQLException.getSQLState.
-     * <p/>
+     * <p>
      * An error code. This is an integer value identifying the error that caused the SQLException instance to
      * be thrown. Its value and meaning are implementation-specific and might be the actual error code
      * returned by the underlying data source. Retrieve the error by calling the method
      * SQLException.getErrorCode.
-     * <p/>
+     * <p>
      * A cause. A SQLException instance might have a causal relationship, which consists of one or more
      * Throwable objects that caused the SQLException instance to be thrown. To navigate this chain of causes,
      * recursively call the method SQLException.getCause until a null value is returned.
-     * <p/>
+     * <p>
      * A reference to any chained exceptions. If more than one error occurs, the exceptions are referenced
      * through this chain. Retrieve these exceptions by calling the method SQLException.getNextException on
      * the exception that was thrown.
-     * <p/>
+     * <p>
      * Retrieving Exceptions
-     * <p/>
+     * <p>
      * The following method, JDBCTutorialUtilities.printSQLException outputs the SQLState, error code, error
      * description, and cause (if there is one) contained in the SQLException as well as any other exception
      * chained to it:
@@ -205,35 +236,6 @@ public class MySQLDao
     }
 
 
-    /**
-     * Creates a persistent connection to the Database
-     *
-     * @param dburl The URI to the database.
-     */
-    public void setDb(String dburl)
-    {
-        db = dburl;
-        try
-        {
-            try
-            {
-                Class.forName("com.mysql.jdbc.Driver");
-            }
-            catch (ClassNotFoundException e)
-            {
-                System.out.println(e);
-            }
-
-            connection = DriverManager.getConnection(db);
-        }
-        catch (SQLException e)
-        {
-            printSQLException(e);
-            exitApplication();
-        }
-    }
-
-
     public Timestamp generateTimeStamp()
     {
         // 1) create a java calendar instance
@@ -251,5 +253,11 @@ public class MySQLDao
     private static void exitApplication()
     {
         Runtime.getRuntime().exit(0);
+    }
+
+
+    public boolean isConnected()
+    {
+        return isConnected;
     }
 }

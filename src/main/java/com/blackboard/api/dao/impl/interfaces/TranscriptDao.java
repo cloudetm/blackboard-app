@@ -8,7 +8,7 @@ import java.util.Optional;
 /**
  * The internal API for the persistence layer operations. These operations listed only pertain to the
  * Creation, Retrieval, Updating, and Deletion of Student objects.
- * <p/>
+ * <p>
  *
  * @author ChristopherLicata <chris@bizmerlin.com> Created by ChristopherLicata on 11/18/15.
  */

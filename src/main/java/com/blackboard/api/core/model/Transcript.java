@@ -4,7 +4,7 @@ import com.blackboard.api.core.Season;
 
 /**
  * The Transcript model class that corresponds to the Transcript Table in the Database.
- * <p/>
+ * <p>
  * Created by ChristopherLicata on 11/17/15.
  */
 public class Transcript

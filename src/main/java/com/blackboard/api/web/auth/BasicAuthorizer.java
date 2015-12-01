@@ -1,4 +1,4 @@
-package com.blackboard.web.auth;
+package com.blackboard.api.web.auth;
 
 import com.blackboard.api.core.model.User;
 import io.dropwizard.auth.Authorizer;

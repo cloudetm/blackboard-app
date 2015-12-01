@@ -12,7 +12,7 @@ import static com.blackboard.api.dao.util.MySQLDao.printSQLException;
 
 /**
  * The MySQL implementation of Retrieve, Update and Delete functions on the UserDao Objects.
- * <p/>
+ * <p>
  * Created by ChristopherLicata on 11/19/15.
  */
 public class UserMySQLDao

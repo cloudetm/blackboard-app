@@ -16,7 +16,7 @@ import static org.mockito.Mockito.*;
 
 /**
  * * Test class for the MySQL-based {@link StudentMySQLDao} Operations
- * <p/>
+ * <p>
  * Created by ChristopherLicata on 11/22/23
  */
 public class StudentMySQLDaoTest

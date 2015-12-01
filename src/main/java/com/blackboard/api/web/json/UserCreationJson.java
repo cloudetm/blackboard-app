@@ -1,16 +1,13 @@
-package com.blackboard.web.json;
+package com.blackboard.api.web.json;
 
-import com.blackboard.api.core.model.User;
-import com.blackboard.api.dao.BlackboardApi;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Optional;
-
 /**
- * Created by ChristopherLicata on 11/30/15.
+ * Created by ChristopherLicata on 12/1/15.
  */
-public class UserJson
+public class UserCreationJson
 {
+
     private String firstName;
 
     private String lastName;
@@ -21,25 +18,11 @@ public class UserJson
 
     private int schoolId;
 
+    private boolean isStudent;
 
-    public UserJson()
+
+    public UserCreationJson()
     {
-    }
-
-
-    public UserJson(User user)
-    {
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
-        this.email = user.getEmail();
-        this.password = user.getPassword();
-        this.schoolId = user.getSchoolId();
-    }
-
-
-    public Optional<User> toUser(BlackboardApi api)
-    {
-        return api.getUser(this.email);
     }
 
 
@@ -75,5 +58,12 @@ public class UserJson
     public int getSchoolId()
     {
         return schoolId;
+    }
+
+
+    @JsonProperty
+    public boolean isStudent()
+    {
+        return isStudent;
     }
 }

@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for helper methods within the User class and its child classes
- * <p/>
+ * <p>
  * Created by ChristopherLicata on 11/21/15.
  */
 public class UserModelTest

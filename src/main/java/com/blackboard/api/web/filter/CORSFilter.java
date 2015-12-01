@@ -1,4 +1,4 @@
-package com.blackboard.web.filter;
+package com.blackboard.api.web.filter;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;

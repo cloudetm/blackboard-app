@@ -2,7 +2,7 @@ package com.blackboard.api.core.model;
 
 /**
  * The Course model class that corresponds to the Course Table in the Database.
- * <p/>
+ * <p>
  * Created by ChristopherLicata on 11/17/15.
  */
 public class Course

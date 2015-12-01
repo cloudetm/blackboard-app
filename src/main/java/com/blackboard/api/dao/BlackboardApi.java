@@ -7,8 +7,6 @@ import com.blackboard.api.dao.impl.*;
 import com.blackboard.api.dao.impl.interfaces.*;
 import com.blackboard.api.dao.util.MySQLDao;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -52,7 +50,6 @@ public class BlackboardApi
         this.transcriptDao = new TranscriptMySQLDao(dao);
         this.userDao = new UserMySQLDao(dao);
         this.dao = dao;
-        dao.setDb("jdbc:mysql://blackboard-db-prod01.cd0fd80v826l.us-west-2.rds.amazonaws.com:3306/blackboard_prod01?user=cmlicata&password=timmykim123&useUnicode=true&characterEncoding=UTF-8");
     }
 
 
@@ -153,10 +150,6 @@ public class BlackboardApi
 
     public Optional<User> deleteUserAccount(String userEmail)
     {
-        if (!userDao.findUserByEmail(userEmail).isPresent())
-        {
-            throw new IllegalArgumentException("No user could be found with the email " + userEmail);
-        }
         return userDao.deleteUser(userEmail);
     }
 
@@ -176,6 +169,7 @@ public class BlackboardApi
         return courseDao.findCoursesByInstructor(instructorEmail);
     }
     //TODO implement search by course-prefix-subject and course number and school
+
 
     public List<Course> getAllCoursesOffered(School school)
     {
@@ -467,27 +461,7 @@ public class BlackboardApi
 
 
     public static void main(String[] args)
-            throws ParseException
     {
-        MySQLDao dao = new MySQLDao();
-        BlackboardApi api = new BlackboardApi(dao);
-        dao.setDb("jdbc:mysql://blackboard-db-prod01.cd0fd80v826l.us-west-2.rds.amazonaws" +
-                          ".com:3306/blackboard_prod01?user=cmlicata&password=timmykim123&useUnicode=true&characterEncoding=UTF-8");
-        School school = new School(1, "Moses University");
-        Instructor instructor = Instructor
-                .createInstructor("Ruth", "Sanchez", "rms@att.com", "bucles7363", 1);
-
-        Course testingCourse1 = new Course(1, school, instructor, "Advanced Software Development", Subject.CSCI,
-                                           6001, 4,
-                                           "SD601.docx", 40);
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
-
-      /*  Optional<Assignment> assignment = api.getAssignmentById(2);
-        Optional<Submission> submission = api.getStudentSubmission("ahayesfelts@gmail.com", assignment
-                .get().getAssignmentId());*/
-
-        Optional<Transcript> transcript = api.deleteTranscript(1);
 
     }
 }

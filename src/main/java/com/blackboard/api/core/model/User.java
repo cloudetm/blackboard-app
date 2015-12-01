@@ -6,7 +6,7 @@ import java.security.Principal;
 
 /**
  * This is the User Model Class that maps to the users table in the database.
- * <p/>
+ * <p>
  * Created by ChristopherLicata on 11/14/15.
  */
 public class User

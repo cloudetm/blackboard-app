@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 /**
  * The Submission Model Object that corresponds to the submissions table in the database.
- * <p/>
+ * <p>
  * Created by ChristopherLicata on 11/17/15.
  */
 public class Submission

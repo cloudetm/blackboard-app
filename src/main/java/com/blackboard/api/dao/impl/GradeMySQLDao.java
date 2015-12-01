@@ -16,7 +16,7 @@ import static com.blackboard.api.dao.util.MySQLDao.printSQLException;
 
 /**
  * The MySQL implementation of Create, Retrieve, and Delete functions on the GradDao Objects.
- * <p/>
+ * <p>
  * Created by ChristopherLicata on 11/27/15.
  */
 public class GradeMySQLDao
