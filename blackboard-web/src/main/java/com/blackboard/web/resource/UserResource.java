@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-@Path("/api/v1/user")
+@Path("/api/v1/users")
 public class UserResource
 {
     private BlackboardApi api;
