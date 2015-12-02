@@ -5,7 +5,7 @@ import io.dropwizard.Configuration;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
- * Parses config.yml file in JSON format, retrieving all information necessary for establishing a connection
+ * Parses config.yaml file in JSON format, retrieving all information necessary for establishing a connection
  * to the databas, configuring a server, etc.
  * <p>
  * Created by ChristopherLicata on 11/30/15.

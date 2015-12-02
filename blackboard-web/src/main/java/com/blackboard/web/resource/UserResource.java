@@ -64,9 +64,10 @@ public class UserResource
 
     @POST
     @Timed
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response createUser(UserCreationJson json)
     {
-        if (json.isStudent())
+        if (json.isStudent() == 1)
         {
             Student student = api.createStudent(json.getFirstName(), json.getLastName(), json.getEmail(),
                                                 json.getPassword(), json.getSchoolId());

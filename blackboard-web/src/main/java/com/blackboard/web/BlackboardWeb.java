@@ -7,6 +7,8 @@ import com.blackboard.web.auth.BasicAuthenticator;
 import com.blackboard.web.auth.BasicAuthorizer;
 import com.blackboard.web.filter.CORSFilter;
 import com.blackboard.web.health.BlackboardHealthCheck;
+import com.blackboard.web.resource.SchoolResource;
+import com.blackboard.web.resource.StudentResource;
 import com.blackboard.web.resource.UserResource;
 import io.dropwizard.Application;
 import io.dropwizard.auth.AuthDynamicFeature;
@@ -45,15 +47,35 @@ public class BlackboardWeb
         final BlackboardHealthCheck healthCheck = new BlackboardHealthCheck(dao);
         environment.healthChecks().register("blackboard", healthCheck);
 
-        final UserResource resource = new UserResource(api);
+        final UserResource userResource = new UserResource(api);
         environment.jersey().setUrlPattern("/api/v1/*");
-        environment.jersey().register(resource);
+        environment.jersey().register(userResource);
         environment.jersey().register(
                 new AuthDynamicFeature(
                         new BasicCredentialAuthFilter.Builder<User>()
                                 .setAuthenticator(new BasicAuthenticator(api))
                                 .setAuthorizer(new BasicAuthorizer())
-                                .setRealm("as532zb^!FyzhD8!Xy98x92oyUBQWBfmdAJHMWJWUw6RRkkKTzVrXJT4&Y32ebV*")
+                                .setRealm("Enter the login information of the user.")
+                                .buildAuthFilter())
+        );
+        environment.jersey().register(CORSFilter.class);
+        environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
+
+        final SchoolResource schoolResource = new SchoolResource(api);
+        environment.jersey().setUrlPattern("/api/v1/*");
+        environment.jersey().register(schoolResource);
+        environment.jersey().register(CORSFilter.class);
+        environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
+
+        final StudentResource studentResource = new StudentResource(api);
+        environment.jersey().setUrlPattern("/api/v1/*");
+        environment.jersey().register(studentResource);
+        environment.jersey().register(
+                new AuthDynamicFeature(
+                        new BasicCredentialAuthFilter.Builder<User>()
+                                .setAuthenticator(new BasicAuthenticator(api))
+                                .setAuthorizer(new BasicAuthorizer())
+                                .setRealm("Enter the login information of the user.")
                                 .buildAuthFilter())
         );
         environment.jersey().register(CORSFilter.class);

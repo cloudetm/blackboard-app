@@ -18,7 +18,7 @@ public class UserCreationJson
 
     private int schoolId;
 
-    private boolean isStudent;
+    private int isStudent;
 
 
     public UserCreationJson()
@@ -62,7 +62,7 @@ public class UserCreationJson
 
 
     @JsonProperty
-    public boolean isStudent()
+    public int isStudent()
     {
         return isStudent;
     }

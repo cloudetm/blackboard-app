@@ -44,7 +44,7 @@ public class StudentResource
 
 
     @GET
-    @Path("/{courseid}")
+    @Path("/courses/{courseid}")
     @RolesAllowed("USER")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getStudentsInCourse(@PathParam("courseid") int courseId)
