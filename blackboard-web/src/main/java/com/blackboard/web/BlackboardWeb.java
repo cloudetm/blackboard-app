@@ -8,9 +8,7 @@ import com.blackboard.web.auth.BasicAuthenticator;
 import com.blackboard.web.auth.BasicAuthorizer;
 import com.blackboard.web.filter.CORSFilter;
 import com.blackboard.web.health.BlackboardHealthCheck;
-import com.blackboard.web.resource.SchoolResource;
-import com.blackboard.web.resource.StudentResource;
-import com.blackboard.web.resource.UserResource;
+import com.blackboard.web.resource.*;
 import io.dropwizard.Application;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthValueFactoryProvider;
@@ -71,24 +69,16 @@ public class BlackboardWeb
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
 
         final SchoolResource schoolResource = new SchoolResource(schoolService);
-        environment.jersey().setUrlPattern("/api/v1/*");
         environment.jersey().register(schoolResource);
-        environment.jersey().register(CORSFilter.class);
-        environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
 
         final StudentResource studentResource = new StudentResource(studentService, userService);
-        environment.jersey().setUrlPattern("/api/v1/*");
         environment.jersey().register(studentResource);
-        environment.jersey().register(
-                new AuthDynamicFeature(
-                        new BasicCredentialAuthFilter.Builder<User>()
-                                .setAuthenticator(new BasicAuthenticator(userService))
-                                .setAuthorizer(new BasicAuthorizer())
-                                .setRealm("Enter the login information of the user.")
-                                .buildAuthFilter())
-        );
-        environment.jersey().register(CORSFilter.class);
-        environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
+
+        final CourseResource courseResource = new CourseResource(courseService, instructorService, schoolService);
+        environment.jersey().register(courseResource);
+
+        final TranscriptResource transcriptResource = new TranscriptResource(transcriptService, courseService);
+        environment.jersey().register(transcriptResource);
     }
 }
 

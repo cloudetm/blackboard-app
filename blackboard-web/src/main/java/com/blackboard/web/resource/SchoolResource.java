@@ -20,6 +20,7 @@ import java.util.stream.Stream;
  * Created by ChristopherLicata on 12/1/15.
  */
 @Path("api/v1/schools")
+@Produces(MediaType.APPLICATION_JSON)
 public class SchoolResource
 {
 

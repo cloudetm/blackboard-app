@@ -37,7 +37,7 @@ public class CourseJson
         courseNumber = course.getCourseNumber();
         credits = course.getCredits();
         syllabusFileName = course.getSyllabusFileName();
-        maxCapacity = maxCapacity;
+        this.maxCapacity = course.getMaxCapacity();
     }
 
     @JsonProperty
@@ -93,4 +93,5 @@ public class CourseJson
     {
         return maxCapacity;
     }
+
 }

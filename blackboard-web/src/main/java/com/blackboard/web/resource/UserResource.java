@@ -65,9 +65,6 @@ public class UserResource
         }
     }
 
-    @GET
-    @Path("/login/{email}")
-
 
     @POST
     @Timed
