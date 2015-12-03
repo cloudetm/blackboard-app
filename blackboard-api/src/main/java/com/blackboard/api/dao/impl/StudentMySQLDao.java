@@ -50,10 +50,13 @@ public class StudentMySQLDao
         Optional<ResultSet> studentId = dao.update(query, fname, lname, email, pw, school_id, 1);
         try
         {
-            // Assign the row id to the assignmentId for easy access
-            student.setUserId(studentId.get().getInt(1));
-            // Closing result set for good form.
-            studentId.get().close();
+            if (studentId.get().next())
+            {
+                // Assign the row id to the assignmentId for easy access
+                student.setUserId(studentId.get().getInt(1));
+                // Closing result set for good form.
+                studentId.get().close();
+            }
 
         }
         catch (SQLException e)

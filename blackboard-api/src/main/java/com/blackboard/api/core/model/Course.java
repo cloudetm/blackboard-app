@@ -142,6 +142,9 @@ public class Course
         this.maxCapacity = maxCapacity;
     }
 
+    /**
+     * Helper function that relieves us from the responsibility of serializing all of the objects.
+     */
 
     public String getSubjectAsString()
     {

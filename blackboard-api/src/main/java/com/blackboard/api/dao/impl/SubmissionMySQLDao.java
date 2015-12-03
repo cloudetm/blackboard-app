@@ -223,7 +223,7 @@ public class SubmissionMySQLDao
     @Override
     public Submission updateSubmission(Submission submission)
     {
-        java.lang.String query = new StringBuilder("UPDATE submissions SET assignment_id = ?, grade_id = ?, ")
+        String query = new StringBuilder("UPDATE submissions SET assignment_id = ?, grade_id = ?, ")
                 .append("student_email = ?, date_time_submitted = ?, submission_filename = ?")
                 .append(" WHERE submission_id = ? LIMIT 1")
                 .toString();

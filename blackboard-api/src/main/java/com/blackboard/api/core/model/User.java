@@ -130,7 +130,8 @@ public class User
      */
     static public String encryptPassword(String pw)
     {
-        return BCrypt.hashpw(pw, BCrypt.gensalt());
+
+        return BCrypt.hashpw(pw, "$2a$10$5PzfMor2c0iZ1PF1w5Y51.");
     }
 
 

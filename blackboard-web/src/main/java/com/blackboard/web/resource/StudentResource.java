@@ -2,7 +2,8 @@ package com.blackboard.web.resource;
 
 import com.blackboard.api.core.model.Student;
 import com.blackboard.api.core.model.User;
-import com.blackboard.api.dao.BlackboardApi;
+import com.blackboard.api.dao.service.StudentService;
+import com.blackboard.api.dao.service.UserService;
 import com.blackboard.web.json.StudentJson;
 import com.codahale.metrics.annotation.Timed;
 import io.dropwizard.auth.Auth;
@@ -21,12 +22,13 @@ import java.util.stream.Stream;
 @Path("/api/v1/students")
 public class StudentResource
 {
-    private BlackboardApi api;
+    private StudentService studentService;
+    private UserService userService;
 
-
-    public StudentResource(BlackboardApi api)
+    public StudentResource(StudentService studentService, UserService userService)
     {
-        this.api = api;
+        this.userService = userService;
+        this.studentService = studentService;
     }
 
 
@@ -35,7 +37,7 @@ public class StudentResource
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllStudentUsers()
     {
-        List<Student> students = api.getAllStudents();
+        List<Student> students = studentService.getAllStudents();
         Stream<StudentJson> jsons = students.parallelStream().map(student -> {
             return new StudentJson(student);
         });
@@ -49,7 +51,7 @@ public class StudentResource
     @Produces(MediaType.APPLICATION_JSON)
     public Response getStudentsInCourse(@PathParam("courseid") int courseId)
     {
-        List<Student> students = api.getStudentsInCourse(courseId);
+        List<Student> students = studentService.getStudentsInCourse(courseId);
         Stream<StudentJson> jsons = students.parallelStream().map(student -> {
             return new StudentJson(student);
         });
@@ -64,7 +66,7 @@ public class StudentResource
     @Timed
     public Response getStudent(@PathParam("email") String email)
     {
-        Optional<Student> result = api.getStudentAccountByEmail(email);
+        Optional<Student> result = studentService.getStudentAccountByEmail(email);
         if (result.isPresent())
         {
             Student student = result.get();
@@ -86,12 +88,13 @@ public class StudentResource
         if (user.getEmail().equals(email))
         {
 
-            Optional<Student> result = api.getStudentAccountByEmail(email);
+            Optional<Student> result = studentService.getStudentAccountByEmail(email);
 
             if (result.isPresent())
             {
 
-                api.updateStudentAccount(json.getFirstName(), json.getLastName(), json.getEmail(), json
+                userService.updateStudentAccount(json.getFirstName(), json.getLastName(), json.getEmail(),
+                                                 json
                         .getPassword(), json.getGpa(), json.getSchoolId());
                 return getStudent(email);
             }

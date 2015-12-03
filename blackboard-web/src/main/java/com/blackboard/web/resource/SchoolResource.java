@@ -1,7 +1,7 @@
 package com.blackboard.web.resource;
 
 import com.blackboard.api.core.model.School;
-import com.blackboard.api.dao.BlackboardApi;
+import com.blackboard.api.dao.service.SchoolService;
 import com.blackboard.web.json.SchoolJson;
 import com.codahale.metrics.annotation.Timed;
 
@@ -23,12 +23,12 @@ import java.util.stream.Stream;
 public class SchoolResource
 {
 
-    private BlackboardApi api;
+    private SchoolService schoolService;
 
 
-    public SchoolResource(BlackboardApi api)
+    public SchoolResource(SchoolService schoolService)
     {
-        this.api = api;
+        this.schoolService = schoolService;
     }
 
 
@@ -37,7 +37,7 @@ public class SchoolResource
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllSchools()
     {
-        List<School> schools = api.getAllSchools();
+        List<School> schools = schoolService.getAllSchools();
         Stream<SchoolJson> jsons = schools.parallelStream().map(s -> {
             return new SchoolJson(s);
         });
@@ -52,7 +52,7 @@ public class SchoolResource
     @Timed
     public Response getSchool(@PathParam("id") int id)
     {
-        Optional<School> result = api.getSchool(id);
+        Optional<School> result = schoolService.getSchool(id);
         if (result.isPresent())
         {
             School school = result.get();

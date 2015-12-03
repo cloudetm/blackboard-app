@@ -26,6 +26,9 @@ public class MySQLDao
     private boolean isConnected = false;
 
 
+    public MySQLDao()
+    {
+    }
     public MySQLDao(String dbUrl, String driverClass)
     {
         final String CHECK_SQL_QUERY = "SELECT 1";
@@ -246,7 +249,7 @@ public class MySQLDao
         java.util.Date now = calendar.getTime();
 
         // 3) a java current time (now) instance
-        return new java.sql.Timestamp(now.getTime());
+        return new Timestamp(now.getTime());
     }
 
 

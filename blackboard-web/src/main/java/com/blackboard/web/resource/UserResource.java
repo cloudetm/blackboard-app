@@ -3,11 +3,13 @@ package com.blackboard.web.resource;
 import com.blackboard.api.core.model.Instructor;
 import com.blackboard.api.core.model.Student;
 import com.blackboard.api.core.model.User;
-import com.blackboard.api.dao.BlackboardApi;
+import com.blackboard.api.dao.service.InstructorService;
+import com.blackboard.api.dao.service.StudentService;
+import com.blackboard.api.dao.service.UserService;
+import com.blackboard.web.json.UserCreationJson;
 import com.blackboard.web.json.UserJson;
 import com.codahale.metrics.annotation.Timed;
 import io.dropwizard.auth.Auth;
-import com.blackboard.web.json.UserCreationJson;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
@@ -20,21 +22,23 @@ import java.util.stream.Stream;
 @Path("/api/v1/users")
 public class UserResource
 {
-    private BlackboardApi api;
+    private UserService userService;
+    private StudentService studentService;
+    private InstructorService instructorService;
 
-
-    public UserResource(BlackboardApi api)
+    public UserResource(UserService userService, StudentService studentService, InstructorService instructorService)
     {
-        this.api = api;
+        this.userService = userService;
+        this.studentService = studentService;
+        this.instructorService = instructorService;
     }
-
 
     @GET
     @RolesAllowed("USER")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllInstructorUsers()
     {
-        List<Instructor> users = api.getAllInstructors();
+        List<Instructor> users = instructorService.getAllInstructors();
         Stream<UserJson> jsons = users.parallelStream().map(u -> {
             return new UserJson(u);
         });
@@ -49,7 +53,7 @@ public class UserResource
     @Timed
     public Response getUser(@PathParam("email") String email)
     {
-        Optional<User> result = api.getUser(email);
+        Optional<User> result = userService.getUser(email);
         if (result.isPresent())
         {
             User user = result.get();
@@ -61,6 +65,9 @@ public class UserResource
         }
     }
 
+    @GET
+    @Path("/login/{email}")
+
 
     @POST
     @Timed
@@ -69,13 +76,14 @@ public class UserResource
     {
         if (json.isStudent() == 1)
         {
-            Student student = api.createStudent(json.getFirstName(), json.getLastName(), json.getEmail(),
+            Student student = studentService.createStudent(json.getFirstName(), json.getLastName(), json
+                .getEmail(),
                                                 json.getPassword(), json.getSchoolId());
             return Response.ok(new UserJson(student)).build();
         }
         else
         {
-            Instructor instructor = api
+            Instructor instructor = instructorService
                     .createInstructor(json.getFirstName(), json.getLastName(), json.getEmail(),
                                       json.getPassword(), json.getSchoolId());
             return Response.ok(new UserJson(instructor)).build();
@@ -91,10 +99,10 @@ public class UserResource
     {
         if (user.getRole().equals("ADMIN"))
         {
-            Optional<User> result = api.getUser(email);
+            Optional<User> result = userService.getUser(email);
             if (result.isPresent())
             {
-                return Response.ok(new UserJson(api.deleteUserAccount(email).get())).build();
+                return Response.ok(new UserJson(userService.deleteUserAccount(email).get())).build();
             }
             else
             {
@@ -117,12 +125,12 @@ public class UserResource
         if (user.getEmail().equals(email))
         {
 
-            Optional<User> result = api.getUser(email);
+            Optional<User> result = userService.getUser(email);
 
             if (result.isPresent())
             {
 
-                api.updateInstructorAccount(json.getFirstName(), json.getLastName(), json.getEmail(), json
+                userService.updateInstructorAccount(json.getFirstName(), json.getLastName(), json.getEmail(), json
                         .getPassword(), json.getSchoolId());
                 return getUser(email);
             }

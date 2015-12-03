@@ -1,7 +1,8 @@
 package com.blackboard.web;
 
 import com.blackboard.api.core.model.User;
-import com.blackboard.api.dao.BlackboardApi;
+import com.blackboard.api.dao.service.*;
+import com.blackboard.api.dao.service.impl.*;
 import com.blackboard.api.dao.util.MySQLDao;
 import com.blackboard.web.auth.BasicAuthenticator;
 import com.blackboard.web.auth.BasicAuthorizer;
@@ -43,17 +44,25 @@ public class BlackboardWeb
     {
 
         final MySQLDao dao = new MySQLDao(config.getDb(), config.getDriver());
-        final BlackboardApi api = new BlackboardApi(dao);
+        final AssignmentService assignmentService = new AssignmentDaoService(dao);
+        final CourseService courseService = new CourseDaoService(dao);
+        final GradeService gradeService = new GradeDaoService(dao);
+        final InstructorService instructorService = new InstructorDaoService(dao);
+        final SchoolService schoolService = new SchoolDaoService(dao);
+        final StudentService studentService = new StudentDaoService(dao);
+        final SubmissionService submissionService = new SubmissionDaoService(dao);
+        final TranscriptService transcriptService = new TranscriptDaoService(dao);
+        final UserService userService= new UserDaoService(dao);
         final BlackboardHealthCheck healthCheck = new BlackboardHealthCheck(dao);
         environment.healthChecks().register("blackboard", healthCheck);
 
-        final UserResource userResource = new UserResource(api);
+        final UserResource userResource = new UserResource(userService, studentService,instructorService);
         environment.jersey().setUrlPattern("/api/v1/*");
         environment.jersey().register(userResource);
         environment.jersey().register(
                 new AuthDynamicFeature(
                         new BasicCredentialAuthFilter.Builder<User>()
-                                .setAuthenticator(new BasicAuthenticator(api))
+                                .setAuthenticator(new BasicAuthenticator(userService))
                                 .setAuthorizer(new BasicAuthorizer())
                                 .setRealm("Enter the login information of the user.")
                                 .buildAuthFilter())
@@ -61,19 +70,19 @@ public class BlackboardWeb
         environment.jersey().register(CORSFilter.class);
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
 
-        final SchoolResource schoolResource = new SchoolResource(api);
+        final SchoolResource schoolResource = new SchoolResource(schoolService);
         environment.jersey().setUrlPattern("/api/v1/*");
         environment.jersey().register(schoolResource);
         environment.jersey().register(CORSFilter.class);
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
 
-        final StudentResource studentResource = new StudentResource(api);
+        final StudentResource studentResource = new StudentResource(studentService, userService);
         environment.jersey().setUrlPattern("/api/v1/*");
         environment.jersey().register(studentResource);
         environment.jersey().register(
                 new AuthDynamicFeature(
                         new BasicCredentialAuthFilter.Builder<User>()
-                                .setAuthenticator(new BasicAuthenticator(api))
+                                .setAuthenticator(new BasicAuthenticator(userService))
                                 .setAuthorizer(new BasicAuthorizer())
                                 .setRealm("Enter the login information of the user.")
                                 .buildAuthFilter())

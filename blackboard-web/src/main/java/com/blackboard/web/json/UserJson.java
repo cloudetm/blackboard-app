@@ -1,7 +1,7 @@
 package com.blackboard.web.json;
 
 import com.blackboard.api.core.model.User;
-import com.blackboard.api.dao.BlackboardApi;
+import com.blackboard.api.dao.service.UserService;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Optional;
@@ -37,9 +37,9 @@ public class UserJson
     }
 
 
-    public Optional<User> toUser(BlackboardApi api)
+    public Optional<User> toUser(UserService userService)
     {
-        return api.getUser(this.email);
+        return userService.getUser(this.email);
     }
 
 

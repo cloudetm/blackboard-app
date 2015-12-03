@@ -1,7 +1,7 @@
 package com.blackboard.web.auth;
 
 import com.blackboard.api.core.model.User;
-import com.blackboard.api.dao.BlackboardApi;
+import com.blackboard.api.dao.service.UserService;
 import com.google.common.base.Optional;
 import io.dropwizard.auth.AuthenticationException;
 import io.dropwizard.auth.Authenticator;
@@ -13,12 +13,12 @@ import io.dropwizard.auth.basic.BasicCredentials;
 public class BasicAuthenticator
         implements Authenticator<BasicCredentials, User>
 {
-    private BlackboardApi api;
+    private UserService userService;
 
 
-    public BasicAuthenticator(BlackboardApi api)
+    public BasicAuthenticator(UserService userService)
     {
-        this.api = api;
+        this.userService = userService;
     }
 
 
@@ -26,7 +26,7 @@ public class BasicAuthenticator
     public Optional<User> authenticate(BasicCredentials credentials)
             throws AuthenticationException
     {
-        java.util.Optional<User> result = api.getUser(credentials.getUsername());
+        java.util.Optional<User> result = userService.getUser(credentials.getUsername());
         if (result.isPresent())
         {
             User u = result.get();

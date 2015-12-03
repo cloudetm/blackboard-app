@@ -165,8 +165,8 @@ public class AssignmentMySQLDao
         String assignmentFileName = assignment.getAssignmentFileName();
         String instructions = assignment.getInstructions();
         double weight = assignment.getWeight();
-        Date dueDate = new java.sql.Date(assignment.getDueDate().getTime());
-        Date dateAssigned = new java.sql.Date(assignment.getDateAssigned().getTime());
+        Date dueDate = new Date(assignment.getDueDate().getTime());
+        Date dateAssigned = new Date(assignment.getDateAssigned().getTime());
         int totalPoints = assignment.getTotalPoints();
         int courseId = assignment.getCourse().getCourseId();
 
