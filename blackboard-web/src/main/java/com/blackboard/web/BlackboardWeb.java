@@ -50,11 +50,11 @@ public class BlackboardWeb
         final StudentService studentService = new StudentDaoService(dao);
         final SubmissionService submissionService = new SubmissionDaoService(dao);
         final TranscriptService transcriptService = new TranscriptDaoService(dao);
-        final UserService userService= new UserDaoService(dao);
+        final UserService userService = new UserDaoService(dao);
         final BlackboardHealthCheck healthCheck = new BlackboardHealthCheck(dao);
         environment.healthChecks().register("blackboard", healthCheck);
 
-        final UserResource userResource = new UserResource(userService, studentService,instructorService);
+        final UserResource userResource = new UserResource(userService, studentService, instructorService);
         environment.jersey().setUrlPattern("/api/v1/*");
         environment.jersey().register(userResource);
         environment.jersey().register(
@@ -79,6 +79,10 @@ public class BlackboardWeb
 
         final TranscriptResource transcriptResource = new TranscriptResource(transcriptService, courseService);
         environment.jersey().register(transcriptResource);
+
+        final AssignmentResource assignmentResource = new AssignmentResource(assignmentService, courseService,
+                                                                             instructorService);
+        environment.jersey().register(assignmentResource);
     }
 }
 
