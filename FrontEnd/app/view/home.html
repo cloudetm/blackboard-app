@@ -1,0 +1,75 @@
+<header style="padding:20 20 20 20;color:white;width:auto; height:180px; background-color:rgb(65,123,169); font-size:30px;">
+    <h1 style="padding:20 0 0 40;">        
+    MyWebSchool
+    </h1>
+</header>
+<div class="container" style="margin-bottom:30px;width:1000px;min-height:300px;" layout="row">
+    <div flex="40" layout="column" style="border-top:3px solid; margin-top:30px;">
+        <div ng-show="getStatus() == 'signup'" class="form-group">
+            <label for="useremail">First Name:</label>
+            <div>
+                <input class="form-control" type="text" value="" placeholder="first name" ng-model="student.firstName"/>
+            </div>
+            <label for="useremail">Last Name:</label>
+            <div>
+                <input class="form-control" type="text" value="" placeholder="last name" ng-model="student.lastName"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="useremail">Your Email:</label>
+            <div>
+                <input class="form-control" type="text" value="" placeholder="email" ng-model="student.email"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <div>
+                <input class="form-control" type="password" value="" placeholder="password" ng-model="student.password"/>
+            </div>
+        </div>
+        <div ng-show="getStatus() == 'signup'" class="form-group">
+            <label for="password">Your School:</label>
+            <div>
+                <select class="form-control" type="password" value="" placeholder="password" ng-model="schoolName">
+                    <option>The George Washington University</option>
+                    <option>George Mason University</option>
+                    <option>Georgetown University</option>
+                    <option>Moses University</option>
+                </select>
+            </div>
+        </div>
+        <div ng-show="getStatus() == 'signup'" class="form-group">
+            <div class="btn-group" data-toggle="buttons">
+                <label>
+                    <input type="radio" id="1" name="isStudent" value="ture" checked="checked" ng-model="isStudent"/> I am a student
+                </label> 
+                <label style="margin-left:20px;">
+                    <input type="radio" id="2" name="isStudent" value="false" ng-model="isStudent"/> I am an instructor
+                </label>
+            </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+        <div ng-show="getStatus()=='login'">
+            <button ng-click="doLogin()" type="button" class="btn btn-default">
+                Login
+            </button>
+            &nbsp;
+            <a >Forgot your password?</a>
+            &nbsp;&nbsp;&nbsp;
+            <a ng-click="setStatus('signup')">Don't have an account?</a>
+        </div>
+        <div ng-show="getStatus()=='signup'">
+            <button ng-click="doSignup()" type="button" class="btn btn-default">
+                Signup
+            </button>
+            &nbsp;
+            &nbsp;&nbsp;&nbsp;
+            <a ng-click="setStatus('login')" style="padding-left:125px;">Already have an account?</a>
+        </div>
+    </div>
+    <div flex="20"></div>
+    <div flex="40" layout="column" style="border-top:3px solid; margin-top:30px;">
+        <h1>Welcome to MyWebSchool</h1>
+        <p>Organizing your courses and homeworks online!</p>
+    </div>
+</div>
+<div footer></div>
